@@ -1,11 +1,11 @@
 import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
-import { isSupportedLocale, SUPPORTED_LOCALES } from "@/lib/locales";
+import { isSupportedLocale, locales } from "@/lib/locales";
 
 export const dynamicParams = false;
 
 export function generateStaticParams() {
-  return SUPPORTED_LOCALES.map((locale) => ({ locale }));
+  return locales.map((locale) => ({ locale }));
 }
 
 export default async function LocaleLayout({
@@ -16,6 +16,8 @@ export default async function LocaleLayout({
   params: Promise<{ locale: string }>;
 }) {
   const { locale } = await params;
+
   if (!isSupportedLocale(locale)) return notFound();
+
   return <>{children}</>;
 }
