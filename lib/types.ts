@@ -1,13 +1,15 @@
 import { z } from "zod";
 
 /** Loose PAGE shape coming from your API (matches your sample) */
+const metaRecord = z.record(z.string(), z.any());
+
 export const LoosePage = z.object({
   id: z.string(), // UUID
   slug: z.string(),
   is_home: z.boolean().optional(),
   hero_image: z.string().nullable().optional(),
   site: z.string().optional(),
-  meta: z.record(z.any()).optional(),
+  meta: metaRecord.optional(),
   translations: z
     .object({
       en: z
@@ -49,7 +51,7 @@ export const LoosePost = z.object({
   slug: z.string(),
   hero_image: z.string().nullable().optional(),
   site: z.string().optional(),
-  meta: z.record(z.any()).optional(),
+  meta: metaRecord.optional(),
   tags: z.array(z.string()).optional(),
   published_at: z.string().nullable().optional(),
   translations: z
