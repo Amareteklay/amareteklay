@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import Navbar from "@/components/layout/Navbar";
@@ -16,11 +17,16 @@ export default async function RootLayout({
   children,
   params,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   params: Promise<{ locale?: string }>;
 }) {
   const { locale: localeParam } = await params;
-  const locale = isSupportedLocale(localeParam) ? (localeParam as Locale) : DEFAULT_LOCALE;
+
+  // Narrow to string first; then validate with the type guard
+  const locale: Locale =
+    typeof localeParam === "string" && isSupportedLocale(localeParam)
+      ? (localeParam as Locale)
+      : DEFAULT_LOCALE;
 
   return (
     <html lang={locale} suppressHydrationWarning>
