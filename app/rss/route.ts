@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { SUPPORTED_LOCALES } from "@/lib/locales";
+import { locales } from "@/lib/locales";
 
 type CmsPost = {
   slug: string;
@@ -16,7 +16,7 @@ export async function GET() {
   const posts = (Array.isArray(data.results) ? data.results : []) as CmsPost[];
 
   const channels = await Promise.all(
-    SUPPORTED_LOCALES.map(async (locale) => {
+    locales.map(async (locale) => {
       const items = posts
         .map(
           (p) => `
