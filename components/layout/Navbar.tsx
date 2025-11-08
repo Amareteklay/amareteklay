@@ -45,9 +45,6 @@ export default function Navbar({ locale }: { locale?: Locale }) {
       <div className="container">
         <div className="flex h-16 items-center justify-between gap-4 rounded-2xl border border-slate-900/10 bg-white/95 px-4 shadow-lg ring-1 ring-black/5 backdrop-blur dark:border-white/10 dark:bg-slate-900/80 dark:ring-white/5 lg:px-6">
           <Link href={`/${currentLocale}`} className="flex flex-col">
-            <span className="text-[10px] font-semibold uppercase tracking-[0.5em] text-slate-500 dark:text-slate-400">
-              Portfolio
-            </span>
             <span className="text-lg font-semibold text-slate-900 dark:text-white">Amare Teklay</span>
           </Link>
 

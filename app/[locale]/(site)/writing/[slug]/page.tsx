@@ -1,4 +1,3 @@
-// app/[locale]/(site)/writing/[slug]/page.tsx
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { apiGet } from "@/lib/api";
@@ -23,15 +22,11 @@ function plainText(html?: string) {
 }
 
 async function fetchPost(slug: string, locale: Locale) {
-  // If your API supports detail-by-slug, you can switch to:
-  // return apiGet<Post>(`/content/posts/${encodeURIComponent(slug)}/`, locale, { revalidate, addQueryParam: true });
-
-  // Query-by-slug (works with paginated endpoints)
-  const res = await apiGet<{ results: Post[] }>(
-    `/content/posts/?slug=${encodeURIComponent(slug)}`,
-    locale,
-    { revalidate, addQueryParam: true }
-  );
+  const qs = new URLSearchParams({ slug });
+  const res = await apiGet<{ results: Post[] }>(`/content/posts/?${qs}`, locale, {
+    revalidate,
+    addQueryParam: true,
+  });
   return res.results?.[0] ?? null;
 }
 
@@ -55,8 +50,8 @@ export async function generateMetadata({ params }: RouteParams): Promise<Metadat
     openGraph: {
       title: post.title,
       description,
-      url: `/${locale}/writing/${post.slug}`,
       type: "article",
+      url: `/${locale}/writing/${post.slug}`,
     },
     alternates: {
       canonical: `/${locale}/writing/${post.slug}`,
@@ -74,11 +69,32 @@ export default async function PostPage({ params }: RouteParams) {
 
   const html = post.content_html || post.body || "";
 
+  // Optional: JSON-LD Article structured data
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    datePublished: post.published_at || undefined,
+    description:
+      post.excerpt ||
+      post.summary ||
+      plainText(post.content_html || post.body)?.slice(0, 200) ||
+      undefined,
+    mainEntityOfPage: `/${locale}/writing/${post.slug}`,
+  };
+
   return (
     <main className="mx-auto max-w-3xl px-4 py-10">
+      <script
+        type="application/ld+json"
+        // eslint-disable-next-line react/no-danger
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <h1 className="mb-2 text-3xl font-bold tracking-tight">{post.title}</h1>
       <p className="mb-8 text-sm text-slate-500 dark:text-slate-400">
-        {post.published_at ? new Date(post.published_at).toLocaleDateString() : ""}
+        {post.published_at
+          ? new Date(post.published_at).toLocaleDateString()
+          : ""}
       </p>
       <article
         className="prose max-w-none dark:prose-invert"
