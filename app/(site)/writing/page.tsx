@@ -1,12 +1,12 @@
 import { api } from "@/lib/api";
-import { PaginatedPagesLoose } from "@/lib/types";
+import { PaginatedPostsLoose } from "@/lib/types";
 import { normalizePost } from "@/lib/normalize";
 
 export const revalidate = 60;
 
 export default async function WritingPage() {
   const data = await api<unknown>("/content/posts/", { next: { revalidate } });
-  const parsed = PaginatedPagesLoose.parse(data);
+  const parsed = PaginatedPostsLoose.parse(data);
   const posts = parsed.results.map(normalizePost);
 
   return (

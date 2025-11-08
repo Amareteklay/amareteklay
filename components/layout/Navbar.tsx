@@ -21,7 +21,6 @@ export default function Navbar() {
     const next = resolvedTheme === "dark" ? "light" : "dark";
     setTheme(next);
   }
-  const isDark = resolvedTheme === "dark";
 
   return (
     <header className="sticky top-4 z-40">
@@ -70,11 +69,12 @@ export default function Navbar() {
             </nav>
             <button
               onClick={toggleTheme}
-              aria-label={`Switch to ${isDark ? "light" : "dark"} theme`}
+              aria-label="Toggle theme"
               className="group relative inline-flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border border-white/30 bg-slate-900/90 text-white shadow-lg transition hover:scale-105 dark:border-white/20 dark:bg-white/90 dark:text-slate-900"
             >
               <span className="sr-only">Toggle theme</span>
-              {isDark ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+              <Sun className="h-5 w-5 dark:hidden" aria-hidden />
+              <Moon className="hidden h-5 w-5 dark:block" aria-hidden />
             </button>
           </div>
         </div>
