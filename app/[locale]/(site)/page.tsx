@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Locale } from "@/lib/locales";
 
 export const revalidate = 60;
 
@@ -7,22 +8,28 @@ const featureCards = [
     label: "Writing",
     title: "Field notes & essays",
     copy: "Dispatches from adaptation programs, public health pilots, and data stories.",
-    href: "/writing",
+    slug: "writing",
   },
   {
     label: "Projects",
     title: "Selected builds",
     copy: "Product experiments, research collaborations, and analytics work.",
-    href: "/projects",
+    slug: "projects",
   },
 ];
 
-export default function HomePage() {
+
+type Props = { params: Promise<{ locale: Locale }> };
+
+export default async function HomePage({ params }: Props) {
+  const { locale } = await params;
+  const localeHref = (slug?: string) => `/${locale}${slug ? `/${slug}` : ""}`;
+
   return (
     <section className="container space-y-12 py-16 lg:space-y-16 lg:py-24">
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
         <div className="space-y-8">
-          <div className="pill w-fit">Public health · Adaptation · Data</div>
+          <div className="pill w-fit">Public health / Adaptation / Data</div>
           <div className="space-y-5">
             <h1 className="text-4xl font-semibold tracking-tight text-slate-900 dark:text-white lg:text-5xl">
               Research, writing, and product work for resilient systems.
@@ -34,14 +41,14 @@ export default function HomePage() {
           </div>
           <div className="flex flex-wrap gap-4">
             <Link
-              href="/writing"
+              href={localeHref("writing")}
               className="inline-flex items-center gap-2 rounded-full bg-slate-900 px-6 py-3 text-sm font-semibold text-white transition hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
             >
               Read the latest
               <span aria-hidden>&gt;</span>
             </Link>
             <Link
-              href="/projects"
+              href={localeHref("projects")}
               className="inline-flex items-center gap-2 rounded-full border border-slate-900/10 px-6 py-3 text-sm font-semibold text-slate-900 transition hover:border-slate-900/30 dark:border-white/20 dark:text-white dark:hover:border-white/50"
             >
               Explore projects
@@ -74,7 +81,7 @@ export default function HomePage() {
         {featureCards.map((card) => (
           <Link
             key={card.label}
-            href={card.href}
+            href={localeHref(card.slug)}
             className="surface-card hover-lift flex flex-col gap-4 p-6 transition-colors hover:bg-white"
           >
             <span className="text-xs uppercase tracking-[0.4em] text-slate-500">{card.label}</span>

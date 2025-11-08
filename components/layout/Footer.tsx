@@ -1,8 +1,11 @@
+import type { Locale } from "@/lib/locales";
+
 const footerLinks = [
-  { href: "/about", label: "About" },
-  { href: "/writing", label: "Writing" },
-  { href: "/projects", label: "Projects" },
-  { href: "/contact", label: "Contact" },
+  { slug: "", label: "Home" },
+  { slug: "about", label: "About" },
+  { slug: "writing", label: "Writing" },
+  { slug: "projects", label: "Projects" },
+  { slug: "contact", label: "Contact" },
 ];
 
 const socialLinks = [
@@ -13,13 +16,18 @@ const socialLinks = [
 
 const proWriting = { href: "https://homoadapticus.com", label: "Homo Adapticus" };
 
-export default function Footer() {
+function withLocale(locale: Locale, slug: string) {
+  if (!slug) return `/${locale}`;
+  return `/${locale}/${slug}`;
+}
+
+export default function Footer({ locale }: { locale: Locale }) {
   const year = new Date().getFullYear();
 
   return (
     <footer className="mt-20 pb-10">
       <div className="container">
-        <div className="surface-card px-6 py-10 text-sm text-slate-600 dark:text-slate-300">
+        <div className="rounded-3xl border border-slate-900/10 bg-white/90 px-6 py-10 text-sm text-slate-600 shadow-xl ring-1 ring-black/5 backdrop-blur dark:border-white/10 dark:bg-slate-900/70 dark:text-slate-300 dark:ring-white/5">
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-[1.2fr_0.9fr_0.9fr]">
             <div className="space-y-4">
               <p className="text-xs uppercase tracking-[0.4em] text-indigo-500">Stay curious</p>
@@ -44,8 +52,8 @@ export default function Footer() {
               <div className="grid gap-2 text-base text-slate-900 dark:text-white">
                 {footerLinks.map((link) => (
                   <a
-                    key={link.href}
-                    href={link.href}
+                    key={link.slug || "home"}
+                    href={withLocale(locale, link.slug)}
                     className="transition-colors hover:text-indigo-500 dark:hover:text-indigo-400"
                   >
                     {link.label}

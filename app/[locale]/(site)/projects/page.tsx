@@ -1,15 +1,19 @@
-import { api } from "@/lib/api";
+import { apiGet } from "@/lib/api";
 import { PaginatedPagesLoose } from "@/lib/types";
 import { normalizePage } from "@/lib/normalize";
+import type { Locale } from "@/lib/locales";
 
 export const revalidate = 300;
 
-export default async function ProjectsPage() {
+type Props = { params: Promise<{ locale: Locale }> };
+
+export default async function ProjectsPage({ params }: Props) {
+  const { locale } = await params;
   let projects: Array<ReturnType<typeof normalizePage>> = [];
   let errorMessage: string | null = null;
 
   try {
-    const data = await api<unknown>("/content/pages/", { next: { revalidate } });
+    const data = await apiGet<unknown>("/content/pages/", locale, { revalidate, addQueryParam: true });
     const parsed = PaginatedPagesLoose.parse(data);
     const pages = parsed.results.map(normalizePage);
     const blacklist = new Set(["about"]);
@@ -50,7 +54,11 @@ export default async function ProjectsPage() {
       ) : (
         <div className="grid gap-5 md:grid-cols-2">
           {projects.map((p) => (
-            <a key={p.id} href={`/projects/${p.slug}`} className="surface-card hover-lift flex h-full flex-col gap-3 p-6">
+            <a
+              key={p.id}
+              href={`/${locale}/projects/${p.slug}`}
+              className="surface-card hover-lift flex h-full flex-col gap-3 p-6"
+            >
               <span className="text-xs uppercase tracking-[0.4em] text-slate-500">Project</span>
               <h3 className="text-xl font-semibold text-slate-900 dark:text-white">{p.title}</h3>
               <p className="text-sm font-semibold text-indigo-500">Open case study</p>

@@ -1,11 +1,15 @@
-import { api } from "@/lib/api";
+import { apiGet } from "@/lib/api";
 import { PaginatedPostsLoose } from "@/lib/types";
 import { normalizePost } from "@/lib/normalize";
+import type { Locale } from "@/lib/locales";
 
 export const revalidate = 60;
 
-export default async function WritingPage() {
-  const data = await api<unknown>("/content/posts/", { next: { revalidate } });
+type Props = { params: Promise<{ locale: Locale }> };
+
+export default async function WritingPage({ params }: Props) {
+  const { locale } = await params;
+  const data = await apiGet<unknown>("/content/posts/", locale, { revalidate, addQueryParam: true });
   const parsed = PaginatedPostsLoose.parse(data);
   const posts = parsed.results.map(normalizePost);
 
@@ -24,7 +28,7 @@ export default async function WritingPage() {
       <ul className="space-y-4">
         {posts.map((p) => (
           <li key={p.id}>
-            <a className="surface-card hover-lift block space-y-3 p-6" href={`/blog/${p.slug}`}>
+            <a className="surface-card hover-lift block space-y-3 p-6" href={`/${locale}/writing/${p.slug}`}>
               <div className="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.4em] text-slate-500">
                 <span>Writing</span>
                 {p.published_at && (

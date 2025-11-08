@@ -1,23 +1,64 @@
-import { env } from "./env";
+import type { Locale } from "./locales";
 
-type Init = RequestInit & { next?: { revalidate?: number } };
+const RAW_API_BASE = process.env.NEXT_PUBLIC_API_BASE ?? process.env.API_BASE;
+const REVALIDATE = 300;
 
-function join(base: string, path: string) {
-  const b = base.endsWith("/") ? base.slice(0, -1) : base;
-  const p = path.startsWith("/") ? path : `/${path}`;
-  return b + p;
+if (!RAW_API_BASE) {
+  throw new Error("API base URL is not configured (API_BASE / NEXT_PUBLIC_API_BASE)");
 }
 
-export async function api<T>(path: string, init?: Init): Promise<T> {
-  const url = join(env.NEXT_PUBLIC_API_BASE, path);
-  const res = await fetch(url, {
-    headers: { "Content-Type": "application/json", ...(init?.headers || {}) },
-    ...init,
-    next: init?.next,
-  });
-  if (!res.ok) {
-    const msg = await res.text().catch(() => "");
-    throw new Error(`API ${res.status} ${url}\n${msg}`);
+const API_BASE = normalizeBase(RAW_API_BASE);
+
+type ApiGetInit = RequestInit & {
+  revalidate?: number;
+  addQueryParam?: boolean;
+};
+
+export async function apiGet<T>(
+  path: string,
+  locale: Locale,
+  init?: ApiGetInit
+): Promise<T> {
+  const url = buildUrl(path);
+
+  if (init?.addQueryParam && !url.searchParams.has("lang")) {
+    url.searchParams.set("lang", locale);
   }
-  return res.json() as Promise<T>;
+
+  const response = await fetch(url.toString(), {
+    ...init,
+    next: { revalidate: init?.revalidate ?? REVALIDATE },
+    headers: {
+      Accept: "application/json",
+      "Accept-Language": locale,
+      ...(init?.headers ?? {}),
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error(`Fetch failed (${response.status}) ${url.toString()}`);
+  }
+
+  return (await response.json()) as T;
+}
+
+function normalizeBase(raw: string): URL {
+  const normalized = raw.endsWith("/") ? raw : `${raw}/`;
+
+  try {
+    return new URL(normalized);
+  } catch {
+    throw new Error(`Invalid API base URL: ${raw}`);
+  }
+}
+
+function buildUrl(path: string): URL {
+  if (!path) throw new Error("Path must be provided");
+
+  if (/^https?:\/\//i.test(path)) {
+    return new URL(path);
+  }
+
+  const cleanedPath = path.startsWith("/") ? path.slice(1) : path;
+  return new URL(cleanedPath, API_BASE);
 }

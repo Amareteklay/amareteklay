@@ -1,11 +1,15 @@
-import { api } from "@/lib/api";
+import { apiGet } from "@/lib/api";
 import { LoosePage } from "@/lib/types";
 import { normalizePage } from "@/lib/normalize";
+import type { Locale } from "@/lib/locales";
 
 export const revalidate = 300;
 
-export default async function AboutPage() {
-  const raw = await api<unknown>("/content/pages/about/", { next: { revalidate } });
+type Props = { params: Promise<{ locale: Locale }> };
+
+export default async function AboutPage({ params }: Props) {
+  const { locale } = await params;
+  const raw = await apiGet<unknown>("/content/pages/about/", locale, { revalidate, addQueryParam: true });
   const page = normalizePage(LoosePage.parse(raw));
 
   return (
