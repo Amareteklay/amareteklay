@@ -1,0 +1,56 @@
+@import "tailwindcss";
+/* Optional plugins */
+@plugin "@tailwindcss/typography";
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --ring-color: 238 84% 67%;
+    --surface: 0 0% 100%;
+    --muted: 224 16% 60%;
+  }
+
+  .dark {
+    color-scheme: dark;
+    --ring-color: 268 92% 75%;
+    --surface: 222 30% 15%;
+    --muted: 214 25% 68%;
+  }
+
+  body {
+    font-feature-settings: "tnum" on, "cv11" on, "ss01" on;
+    @apply min-h-screen bg-[#f6f6fb] text-slate-900 dark:bg-[#05010d] dark:text-slate-100 antialiased;
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.16), transparent 45%),
+      radial-gradient(circle at 80% 0%, rgba(45, 212, 191, 0.14), transparent 40%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 30%);
+  }
+
+  ::selection {
+    @apply bg-indigo-500/80 text-white;
+  }
+
+  a {
+    @apply transition-colors duration-200 text-current;
+  }
+
+  .container {
+    @apply px-4 sm:px-6 lg:px-10;
+  }
+}
+
+@layer components {
+  .surface-card {
+    @apply rounded-3xl border border-black/5 dark:border-white/10 bg-white/70 dark:bg-white/5 shadow-[0_25px_70px_-35px_rgba(15,23,42,0.75)] backdrop-blur;
+  }
+
+  .hover-lift {
+    @apply transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-2xl;
+  }
+
+  .pill {
+    @apply inline-flex items-center gap-2 rounded-full border border-black/5 dark:border-white/15 px-4 py-1.5 text-xs tracking-[0.25em] uppercase text-slate-600 dark:text-slate-200;
+  }
+}
+
+.prose { @apply max-w-none; }
