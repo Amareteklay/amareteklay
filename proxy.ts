@@ -1,40 +1,30 @@
+// proxy.ts
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { DEFAULT_LOCALE, isSupportedLocale } from "./lib/locales";
+import { locales, isLocale, type Locale } from "./lib/locales";
+
+const DEFAULT_LOCALE: Locale = "en";
 
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // Skip files and Next internals
+  // Skip static assets and API routes
   if (
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api") ||
     pathname.includes(".")
   ) {
-    return NextResponse.next();
+    return;
   }
 
-  const segments = pathname.split("/").filter(Boolean);
-  const maybeLocale = segments[0];
-
-  // `/` -> `/<default-locale>`
-  if (segments.length === 0) {
+  const pathLocale = pathname.split("/")[1];
+  if (!isLocale(pathLocale)) {
     const url = req.nextUrl.clone();
-    url.pathname = `/${DEFAULT_LOCALE}`;
+    url.pathname = `/${DEFAULT_LOCALE}${pathname}`;
     return NextResponse.redirect(url);
   }
-
-  // If first segment isn't a supported locale, prepend default
-  if (!isSupportedLocale(maybeLocale)) {
-    const url = req.nextUrl.clone();
-    url.pathname = `/${DEFAULT_LOCALE}${pathname.startsWith("/") ? "" : "/"}${pathname}`;
-    return NextResponse.redirect(url);
-  }
-
-  return NextResponse.next();
 }
 
 export const config = {
-  // Run on all routes (except static files handled above)
-  matcher: ["/((?!_next|.*\\..*).*)"],
+  matcher: ["/((?!_next|api|.*\\..*).*)"],
 };
