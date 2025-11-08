@@ -1,7 +1,5 @@
-export const SUPPORTED_LOCALES = ["en", "sv"] as const;
-export type Locale = (typeof SUPPORTED_LOCALES)[number];
-export const DEFAULT_LOCALE: Locale = "en";
-
-export function isSupportedLocale(v?: string | null): v is Locale {
-  return !!v && SUPPORTED_LOCALES.includes(v as Locale);
+export const locales = ["en", "sv"] as const;
+export type Locale = typeof locales[number];
+export function isLocale(x: string): x is Locale {
+  return (locales as readonly string[]).includes(x);
 }

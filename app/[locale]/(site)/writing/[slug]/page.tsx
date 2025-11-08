@@ -2,7 +2,7 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { apiGet } from "@/lib/api";
-import type { Locale } from "@/lib/locales";
+import { isLocale, type Locale } from "@/lib/locales";
 
 export const revalidate = 300;
 
@@ -16,20 +16,17 @@ type Post = {
   summary?: string;
 };
 
-type Props = { params: { locale: Locale; slug: string } };
+type RouteParams = { params: { locale: string; slug: string } };
 
 function plainText(html?: string) {
   return html ? html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim() : "";
 }
 
-async function fetchPost(slug: string, locale: string) {
-  // Option A: detail-by-slug
-  // return apiGet<Post>(`/content/posts/${encodeURIComponent(slug)}/`, locale, {
-  //   revalidate,
-  //   addQueryParam: true,
-  // });
+async function fetchPost(slug: string, locale: Locale) {
+  // If your API supports detail-by-slug, you can switch to:
+  // return apiGet<Post>(`/content/posts/${encodeURIComponent(slug)}/`, locale, { revalidate, addQueryParam: true });
 
-  // Option B: query-by-slug (works with paginated list APIs)
+  // Query-by-slug (works with paginated endpoints)
   const res = await apiGet<{ results: Post[] }>(
     `/content/posts/?slug=${encodeURIComponent(slug)}`,
     locale,
@@ -38,13 +35,19 @@ async function fetchPost(slug: string, locale: string) {
   return res.results?.[0] ?? null;
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { slug, locale } = params;
+export async function generateMetadata({ params }: RouteParams): Promise<Metadata> {
+  const { locale: rawLocale, slug } = params;
+  if (!isLocale(rawLocale)) return { title: "Not found" };
+  const locale = rawLocale as Locale;
+
   const post = await fetchPost(slug, locale);
   if (!post) return { title: "Not found" };
 
   const description =
-    post.excerpt || post.summary || plainText(post.content_html || post.body)?.slice(0, 140) || undefined;
+    post.excerpt ||
+    post.summary ||
+    plainText(post.content_html || post.body)?.slice(0, 140) ||
+    undefined;
 
   return {
     title: post.title,
@@ -61,8 +64,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function PostPage({ params }: Props) {
-  const { slug, locale } = params;
+export default async function PostPage({ params }: RouteParams) {
+  const { locale: rawLocale, slug } = params;
+  if (!isLocale(rawLocale)) return notFound();
+  const locale = rawLocale as Locale;
+
   const post = await fetchPost(slug, locale);
   if (!post) return notFound();
 
