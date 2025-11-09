@@ -37,7 +37,7 @@ export default async function WritingPage(props: Props) {
     }
   })();
 
-  const posts = parsed.results.map(normalizePost);
+  const posts = parsed.results.map((raw) => normalizePost(raw, locale));
 
   const withLocale = (slug: string) =>
     `/${locale}${slug.startsWith("/") ? "" : "/"}${slug}`;
