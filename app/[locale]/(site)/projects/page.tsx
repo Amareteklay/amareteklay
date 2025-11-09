@@ -17,7 +17,7 @@ export default async function ProjectsPage({ params }: Props) {
   try {
     const data = await apiGet<unknown>("/content/pages/", locale, { revalidate, addQueryParam: true });
     const parsed = PaginatedPagesLoose.parse(data);
-    const pages = parsed.results.map(normalizePage);
+    const pages = parsed.results.map((raw) => normalizePage(raw, locale));
     const blacklist = new Set(["about"]);
     projects = pages.filter((p) => !blacklist.has(p.slug));
   } catch (err) {
