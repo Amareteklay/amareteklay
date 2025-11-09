@@ -1,3 +1,5 @@
+// app/[locale]/(site)/contact/page.tsx
+import { Suspense } from "react";
 import ContactForm from "@/components/forms/ContactForm";
 
 const contactDetails = [
@@ -48,7 +50,10 @@ export default function ContactPage() {
             Tell me about your project, timeline, and how I can help.
           </p>
           <div className="mt-6">
-            <ContactForm />
+            {/* ⛏️ Add Suspense around the client form that uses useSearchParams */}
+            <Suspense fallback={null}>
+              <ContactForm />
+            </Suspense>
           </div>
         </div>
       </div>
