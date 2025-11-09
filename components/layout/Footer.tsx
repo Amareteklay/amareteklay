@@ -1,4 +1,8 @@
-import type { Locale } from "@/lib/locales";
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { DEFAULT_LOCALE, isSupportedLocale, type Locale } from "@/lib/locales";
 
 const footerLinks = [
   { slug: "", label: "Home" },
@@ -16,12 +20,20 @@ const socialLinks = [
 
 const proWriting = { href: "https://homoadapticus.com", label: "Homo Adapticus" };
 
+function getLocaleFromPath(pathname: string | null): Locale {
+  if (!pathname) return DEFAULT_LOCALE;
+  const segment = pathname.split("/").filter(Boolean)[0];
+  return isSupportedLocale(segment ?? "") ? (segment as Locale) : DEFAULT_LOCALE;
+}
+
 function withLocale(locale: Locale, slug: string) {
   if (!slug) return `/${locale}`;
   return `/${locale}/${slug}`;
 }
 
-export default function Footer({ locale }: { locale: Locale }) {
+export default function Footer() {
+  const pathname = usePathname();
+  const locale = getLocaleFromPath(pathname);
   const year = new Date().getFullYear();
 
   return (
@@ -51,16 +63,20 @@ export default function Footer({ locale }: { locale: Locale }) {
           <nav className="space-y-3">
             <p className="text-[11px] uppercase tracking-[0.35em] text-slate-500">Site</p>
             <ul className="grid gap-2 text-base text-slate-900 dark:text-white">
-              {footerLinks.map((link) => (
-                <li key={link.slug || "home"}>
-                  <a
-                    href={withLocale(locale, link.slug)}
-                    className="transition-colors hover:text-indigo-500 dark:hover:text-indigo-400"
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
+              {footerLinks.map((link) => {
+                const href = withLocale(locale, link.slug);
+                return (
+                  <li key={link.slug || "home"}>
+                    <Link
+                      href={href}
+                      prefetch={false}
+                      className="transition-colors hover:text-indigo-500 dark:hover:text-indigo-400"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                );
+              })}
             </ul>
           </nav>
 
