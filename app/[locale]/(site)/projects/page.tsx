@@ -36,8 +36,8 @@ export default async function ProjectsPage({ params }: Props) {
   }
 
   return (
-    <section className="container space-y-10 py-12 lg:py-16">
-      <div className="space-y-4">
+    <section className="container mx-auto max-w-6xl space-y-12 py-16 text-center lg:py-20">
+      <div className="mx-auto max-w-3xl space-y-4">
         <p className="pill">Projects</p>
         <div>
           <h1 className="text-3xl font-semibold text-foreground">Selected work</h1>

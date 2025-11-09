@@ -8,9 +8,7 @@ import type { Locale } from "@/lib/locales";
 export const revalidate = 300;
 
 type ParamsObj = { locale: Locale };
-type Props =
-  | { params: ParamsObj }
-  | { params: Promise<ParamsObj> };
+type Props = { params: ParamsObj } | { params: Promise<ParamsObj> };
 
 export default async function AboutPage(props: Props) {
   const { locale } =
@@ -24,8 +22,7 @@ export default async function AboutPage(props: Props) {
       revalidate,
       addQueryParam: true,
     });
-  } catch (e) {
-    // If the API 404s, surface a proper 404 page
+  } catch {
     return notFound();
   }
 
@@ -45,22 +42,26 @@ export default async function AboutPage(props: Props) {
   const page = normalizePage(pageLoose, locale);
 
   return (
-    <section className="container max-w-3xl space-y-10 py-16 lg:py-24">
-      <div className="pill w-fit bg-secondary/60 text-foreground">About</div>
+  <section
+    className="col-span-full w-full justify-self-center container max-w-3xl py-20 text-center lg:py-28"
+  >
+    <div className="mx-auto mb-6 w-fit rounded-full bg-secondary/60 px-4 py-1.5 text-sm text-foreground/80">
+      About
+    </div>
 
-      <article className="surface-card p-8 transition hover:shadow-md">
-        <div className="prose max-w-none prose-headings:font-semibold prose-headings:tracking-tight prose-a:underline-offset-2 hover:prose-a:text-primary dark:prose-invert">
-          <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground">
-            {page.title}
-          </h1>
+    <h1 className="mb-10 text-4xl font-semibold tracking-tight text-foreground lg:text-5xl">
+      {page.title}
+    </h1>
 
-          {page.content_html ? (
-            <div dangerouslySetInnerHTML={{ __html: page.content_html }} />
-          ) : (
-            <p className="italic text-muted-foreground">Content coming soon.</p>
-          )}
-        </div>
-      </article>
-    </section>
+    <article className="mx-auto rounded-2xl bg-card/60 p-8 shadow-sm backdrop-blur-sm transition-colors sm:p-10">
+      <div className="prose mx-auto max-w-none text-left prose-headings:font-semibold prose-headings:tracking-tight prose-a:underline-offset-2 hover:prose-a:text-primary dark:prose-invert">
+        {page.content_html ? (
+          <div dangerouslySetInnerHTML={{ __html: page.content_html }} />
+        ) : (
+          <p className="italic text-muted-foreground text-center">Content coming soon.</p>
+        )}
+      </div>
+    </article>
+  </section>
   );
 }
