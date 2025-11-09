@@ -3,7 +3,7 @@
 
 /* 1) Theme tokens (Tailwind v4) */
 @theme {
-  /* LIGHT (higher contrast) */
+  /* LIGHT — high-contrast and fresh */
   --color-background: hsl(0 0% 100%);
   --color-foreground: hsl(222 47% 11%);
   --color-card: hsl(0 0% 100%);
@@ -12,57 +12,60 @@
   --color-popover: hsl(0 0% 100%);
   --color-popover-foreground: hsl(222 47% 11%);
 
-  --color-primary: hsl(222 100% 45%);           /* strong indigo */
+  --color-primary: hsl(250 95% 65%);             /* periwinkle/violet */
   --color-primary-foreground: hsl(0 0% 100%);
 
   --color-secondary: hsl(210 40% 96%);
   --color-secondary-foreground: hsl(222 47% 15%);
 
-  --color-muted: hsl(210 40% 96%);
-  --color-muted-foreground: hsl(215 25% 35%);   /* darker for readability */
+  --color-muted: hsl(220 35% 95%);
+  --color-muted-foreground: hsl(224 25% 35%);
 
-  --color-accent: hsl(210 40% 95%);
+  --color-accent: hsl(220 45% 97%);
   --color-accent-foreground: hsl(222 47% 15%);
 
-  --color-destructive: hsl(0 72% 45%);
+  --color-destructive: hsl(0 72% 50%);
   --color-destructive-foreground: hsl(0 0% 100%);
 
-  --color-border: hsl(215 20% 72%);             /* ~slate-300 for clear separation */
-  --color-input: hsl(215 20% 72%);
-  --color-ring: hsl(222 100% 45%);
+  --color-border: hsl(220 15% 80%);
+  --color-input: hsl(220 15% 80%);
+  --color-ring: hsl(250 95% 65%);
+
+  /* trending gradient endpoint */
+  --color-brand-cyan: hsl(180 85% 55%);
 
   --radius: 0.75rem;
 }
 
-/* 2) Dark overrides */
+/* 2) Dark — luminous on near-black background */
 .dark {
-  --color-background: hsl(240 10% 3.9%);
-  --color-foreground: hsl(210 40% 98%);
+  --color-background: hsl(240 6% 6%);
+  --color-foreground: hsl(210 40% 96%);
 
-  --color-card: hsl(240 10% 3.9%);
-  --color-card-foreground: hsl(210 40% 98%);
+  --color-card: hsl(240 6% 8%);
+  --color-card-foreground: hsl(210 40% 96%);
 
-  --color-popover: hsl(240 10% 3.9%);
-  --color-popover-foreground: hsl(210 40% 98%);
+  --color-popover: hsl(240 6% 8%);
+  --color-popover-foreground: hsl(210 40% 96%);
 
-  --color-primary: hsl(210 40% 98%);
-  --color-primary-foreground: hsl(222.2 47.4% 11.2%);
+  --color-primary: hsl(260 95% 72%);
+  --color-primary-foreground: hsl(220 40% 10%);
 
-  --color-secondary: hsl(240 3.7% 15.9%);
-  --color-secondary-foreground: hsl(210 40% 98%);
+  --color-secondary: hsl(240 5% 15%);
+  --color-secondary-foreground: hsl(210 40% 96%);
 
-  --color-muted: hsl(240 3.7% 15.9%);
-  --color-muted-foreground: hsl(215 20.2% 65.1%);
+  --color-muted: hsl(240 5% 15%);
+  --color-muted-foreground: hsl(220 10% 70%);
 
-  --color-accent: hsl(240 3.7% 15.9%);
-  --color-accent-foreground: hsl(210 40% 98%);
+  --color-accent: hsl(240 5% 15%);
+  --color-accent-foreground: hsl(210 40% 96%);
 
-  --color-destructive: hsl(0 62.8% 30.6%);
-  --color-destructive-foreground: hsl(210 40% 98%);
+  --color-destructive: hsl(350 70% 45%);
+  --color-destructive-foreground: hsl(210 40% 96%);
 
-  --color-border: hsl(240 3.7% 15.9%);
-  --color-input: hsl(240 3.7% 15.9%);
-  --color-ring: hsl(210 40% 98%);
+  --color-border: hsl(240 5% 18%);
+  --color-input: hsl(240 5% 18%);
+  --color-ring: hsl(260 95% 72%);
 }
 
 @layer base {
@@ -72,41 +75,85 @@
   body {
     @apply min-h-screen bg-background text-foreground antialiased;
 
-    /* Light gradient background (subtle, won’t wash content) */
+    /* Modern gradient wash */
     background-image:
-      radial-gradient(circle at 20% 20%, rgba(99,102,241,0.12), transparent 45%),
-      radial-gradient(circle at 80% 0%, rgba(45,212,191,0.10), transparent 40%),
-      linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 30%);
+      radial-gradient(circle at 20% 20%, rgba(139,92,246,0.14), transparent 45%),
+      radial-gradient(circle at 80% 0%, rgba(34,211,238,0.12), transparent 40%),
+      linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 30%);
   }
   .dark body {
-    /* Dark variant */
     background-image:
-      radial-gradient(circle at 20% 20%, rgba(99,102,241,0.12), transparent 45%),
-      radial-gradient(circle at 80% 0%, rgba(45,212,191,0.10), transparent 40%),
-      linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0) 30%);
+      radial-gradient(circle at 20% 20%, rgba(139,92,246,0.14), transparent 45%),
+      radial-gradient(circle at 80% 0%, rgba(34,211,238,0.12), transparent 40%),
+      linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 30%);
   }
 
   ::selection { @apply bg-primary text-primary-foreground; }
 
-  /* Links are readable in light, pop in dark */
-  a { @apply transition-colors duration-200 text-foreground/90 hover:text-primary; }
+  /* Global link style — subtle violet→cyan underline */
+  a {
+    position: relative;
+    text-decoration: none;
+    background-image: linear-gradient(
+      to right,
+      var(--color-primary),
+      var(--color-brand-cyan)
+    );
+    background-size: 0% 2px;
+    background-repeat: no-repeat;
+    background-position: 0 100%;
+    transition: background-size 0.25s ease, color 0.25s ease;
+  }
+  a:hover {
+    background-size: 100% 2px;
+    color: var(--color-primary);
+  }
+  a:focus-visible {
+    outline: none;
+    background-size: 100% 2px;
+  }
+  a.no-underline {
+    background-image: none !important;
+    background-size: 0 0 !important;
+  }
 
   .container { @apply px-4 sm:px-6 lg:px-10; }
 }
 
 @layer components {
-  /* Solid panels in light mode for contrast; softer in dark */
   .surface-card {
     @apply rounded-3xl border border-border bg-card text-card-foreground shadow-sm;
   }
   .dark .surface-card {
-    @apply bg-card/70 shadow-[0_25px_70px_-35px_rgba(15,23,42,0.75)] backdrop-blur;
+    @apply bg-card/70 shadow-[0_25px_70px_-35px_rgba(0,0,0,0.6)] backdrop-blur;
   }
 
   .hover-lift { @apply transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-2xl; }
 
   .pill {
     @apply inline-flex items-center gap-2 rounded-full border border-border px-4 py-1.5 text-xs uppercase tracking-[0.25em] text-foreground/80;
+  }
+
+  /* Navbar link modern accent */
+  .navlink {
+    position: relative;
+    @apply rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors;
+  }
+  .navlink:hover { @apply text-primary; }
+  .navlink--active {
+    color: var(--color-primary);
+  }
+  .navlink--active::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: 9999px;
+    background-image: linear-gradient(
+      to right,
+      color-mix(in oklab, var(--color-primary) 20%, transparent),
+      color-mix(in oklab, var(--color-brand-cyan) 20%, transparent)
+    );
   }
 }
 
@@ -123,5 +170,5 @@
   --tw-prose-bullets: var(--color-muted-foreground);
   --tw-prose-hr: var(--color-border);
   --tw-prose-code: var(--color-foreground);
-  --tw-prose-pre-bg: hsl(210 40% 98%); /* light code bg for readability */
+  --tw-prose-pre-bg: hsl(220 40% 98%);
 }
