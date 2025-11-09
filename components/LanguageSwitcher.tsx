@@ -3,6 +3,7 @@
 
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { locales, type Locale, isSupportedLocale } from "@/lib/locales";
 import { cn } from "@/lib/utils";
 
@@ -16,7 +17,7 @@ function replaceLocale(pathname: string, next: Locale) {
   return parts.join("/").replace(/\/{2,}/g, "/");
 }
 
-export default function LanguageSwitcher({ current }: { current: Locale }) {
+function LanguageSwitcherContent({ current }: { current: Locale }) {
   const pathname = usePathname() || "/";
   const search = useSearchParams();
 
@@ -63,5 +64,21 @@ export default function LanguageSwitcher({ current }: { current: Locale }) {
         );
       })}
     </div>
+  );
+}
+
+export default function LanguageSwitcher({ current }: { current: Locale }) {
+  return (
+    <Suspense fallback={
+      <div className="flex items-center gap-1 rounded-full border border-slate-900/15 bg-white/70 px-2 py-1 text-xs font-semibold uppercase tracking-[0.35em] shadow-sm dark:border-white/20 dark:bg-white/5">
+        {locales.map((locale) => (
+          <span key={locale} className="rounded-full px-2 py-1 text-slate-500">
+            {locale.toUpperCase()}
+          </span>
+        ))}
+      </div>
+    }>
+      <LanguageSwitcherContent current={current} />
+    </Suspense>
   );
 }
