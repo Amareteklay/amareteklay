@@ -8,18 +8,18 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-export default function LocaleLayout({
+// In Next 15, segment layouts often receive `params` as a Promise
+export default async function LocaleLayout({
   children,
   params,
 }: {
   children: ReactNode;
-  params: { locale: string }; // <-- not a Promise
+  params: Promise<{ locale: string }>;
 }) {
-  const { locale } = params;
+  const { locale } = await params;
 
   if (!isSupportedLocale(locale)) return notFound();
 
-  // No <html> here; root layout already renders it.
-  // Navbar/Footer derive locale from the URL, so no props needed.
+  // No <html> here; root layout handles it. Children render under the locale segment.
   return <>{children}</>;
 }

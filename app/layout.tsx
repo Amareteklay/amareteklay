@@ -18,9 +18,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang={DEFAULT_LOCALE} suppressHydrationWarning>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Navbar /> {/* no locale prop */}
+          <Navbar /> {/* Navbar derives locale from the URL */}
           <main className="min-h-[70vh]">{children}</main>
-          <Footer /> {/* no locale prop */}
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
