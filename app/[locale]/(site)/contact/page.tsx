@@ -1,7 +1,5 @@
 import { Suspense } from "react";
 import ClientContactForm from "./ClientContactForm";
-export const dynamic = 'force-dynamic'
-export const dynamicParams = true
 
 const contactDetails = [
   { label: "Email", value: "hello@amareteklay.com", href: "mailto:hello@amareteklay.com" },
