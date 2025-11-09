@@ -1,10 +1,11 @@
 "use client";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useMemo } from "react";
-import { cn } from "@/lib/utils";
+import { useEffect, useMemo, useState } from "react";
 import { useTheme } from "next-themes";
-import { Moon, Sun } from "lucide-react";
+import { Menu, X, Moon, Sun } from "lucide-react";
+import { cn } from "@/lib/utils";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { DEFAULT_LOCALE, isSupportedLocale, type Locale } from "@/lib/locales";
 
@@ -18,52 +19,63 @@ const links = [
 
 function getLocaleFromPath(pathname: string | null): Locale {
   if (!pathname) return DEFAULT_LOCALE;
-  const segment = pathname.split("/").filter(Boolean)[0];
-  return isSupportedLocale(segment) ? (segment as Locale) : DEFAULT_LOCALE;
+  const seg = pathname.split("/").filter(Boolean)[0];
+  return isSupportedLocale(seg ?? "") ? (seg as Locale) : DEFAULT_LOCALE;
 }
 
 function withLocale(locale: Locale, slug: string) {
-  if (!slug) return `/${locale}`;
-  return `/${locale}/${slug}`;
+  return slug ? `/${locale}/${slug}` : `/${locale}`;
 }
 
-export default function Navbar({ locale }: { locale?: Locale }) {
+export default function Navbar() {
   const pathname = usePathname();
   const { resolvedTheme, setTheme } = useTheme();
-  const currentLocale = useMemo(
-    () => (locale && isSupportedLocale(locale) ? locale : getLocaleFromPath(pathname)),
-    [locale, pathname]
-  );
+
+  const [mounted, setMounted] = useState(false);
+  const [open, setOpen] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  // 🚫 No prop override. Always trust the URL.
+  const currentLocale = useMemo(() => getLocaleFromPath(pathname), [pathname]);
 
   function toggleTheme() {
-    const next = resolvedTheme === "dark" ? "light" : "dark";
-    setTheme(next);
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
   }
+
+  // Home is active only on exact "/:locale"
+  function isActive(target: string, slug: string) {
+    if (!pathname) return false;
+    if (slug === "") return pathname === `/${currentLocale}`;
+    return pathname === target || pathname.startsWith(`${target}/`);
+  }
+
+  // Close mobile menu on route change
+  useEffect(() => setOpen(false), [pathname]);
 
   return (
     <header className="sticky top-4 z-40">
       <div className="container">
-        <div className="flex h-16 items-center justify-between gap-4 rounded-2xl border border-slate-900/10 bg-white/95 px-4 shadow-lg ring-1 ring-black/5 backdrop-blur dark:border-white/10 dark:bg-slate-900/80 dark:ring-white/5 lg:px-6">
+        <div className="flex h-16 items-center justify-between gap-4 rounded-2xl border border-border bg-card/95 text-card-foreground px-4 shadow-lg ring-1 ring-black/5 backdrop-blur lg:px-6 dark:ring-white/5">
+          {/* Brand */}
           <Link href={`/${currentLocale}`} className="flex flex-col">
-            <span className="text-lg font-semibold text-slate-900 dark:text-white">Amare Teklay</span>
+            <span className="text-lg font-semibold">Amare Teklay</span>
           </Link>
 
+          {/* Desktop nav */}
           <nav className="hidden items-center gap-1 text-sm font-medium md:flex">
             {links.map((entry) => {
               const target = withLocale(currentLocale, entry.slug);
-              const active =
-                pathname === target ||
-                (!!pathname && pathname.startsWith(`${target}/`)) ||
-                (entry.slug === "" && pathname === `/${currentLocale}`);
+              const active = isActive(target, entry.slug);
               return (
                 <Link
                   key={entry.slug || "home"}
                   href={target}
                   aria-current={active ? "page" : undefined}
                   className={cn(
-                    "rounded-full px-4 py-2 text-slate-600 transition hover:text-slate-900 dark:text-slate-200 dark:hover:text-white",
+                    "rounded-full px-4 py-2 transition",
+                    "text-muted-foreground hover:text-foreground",
                     active &&
-                      "border border-slate-900/20 bg-slate-900 text-white shadow-sm dark:border-white/20 dark:bg-white/10"
+                      "border border-border bg-primary text-primary-foreground shadow-sm hover:text-primary-foreground"
                   )}
                 >
                   {entry.label}
@@ -72,37 +84,75 @@ export default function Navbar({ locale }: { locale?: Locale }) {
             })}
           </nav>
 
-          <div className="flex flex-1 items-center justify-end gap-3">
-            <nav className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.3em] md:hidden">
-              {links.map((entry) => {
-                const target = withLocale(currentLocale, entry.slug);
-                const active = pathname === target || (!!pathname && pathname.startsWith(`${target}/`));
-                return (
-                  <Link
-                    key={`${entry.slug || "home"}-mobile`}
-                    href={target}
-                    className={cn(
-                      "text-slate-500 transition hover:text-slate-900 dark:text-slate-300 dark:hover:text-white",
-                      active && "text-slate-900 dark:text-white"
-                    )}
-                  >
-                    {entry.label[0]}
-                  </Link>
-                );
-              })}
-            </nav>
+          {/* Actions */}
+          <div className="flex items-center gap-2">
+            {/* Language is controlled by the URL-derived locale */}
             <LanguageSwitcher current={currentLocale} />
+
+            {/* Theme toggle (JS-driven icon) */}
             <button
               onClick={toggleTheme}
               aria-label="Toggle theme"
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-900/20 bg-slate-900 text-white shadow-md transition hover:scale-105 dark:border-white/20 dark:bg-white dark:text-slate-900"
+              aria-pressed={resolvedTheme === "dark"}
+              title={resolvedTheme === "dark" ? "Switch to light" : "Switch to dark"}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-card-foreground shadow-md transition hover:scale-105"
             >
               <span className="sr-only">Toggle theme</span>
-              <Sun className="h-5 w-5 dark:hidden" aria-hidden />
-              <Moon className="hidden h-5 w-5 dark:block" aria-hidden />
+              {mounted ? (
+                resolvedTheme === "dark" ? (
+                  <Sun className="h-5 w-5" aria-hidden />
+                ) : (
+                  <Moon className="h-5 w-5" aria-hidden />
+                )
+              ) : (
+                <span className="block h-5 w-5" />
+              )}
+            </button>
+
+            {/* Mobile menu toggle */}
+            <button
+              type="button"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-card text-card-foreground shadow-md transition hover:scale-105 md:hidden"
+              aria-label="Open menu"
+              aria-expanded={open}
+              aria-controls="mobile-nav"
+              onClick={() => setOpen((v) => !v)}
+            >
+              {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
             </button>
           </div>
         </div>
+
+        {/* Mobile menu panel */}
+        {open && (
+          <div
+            id="mobile-nav"
+            className="md:hidden mt-2 rounded-2xl border border-border bg-card/95 text-card-foreground shadow-xl backdrop-blur"
+          >
+            <div className="px-4 py-3">
+              <nav className="flex flex-col gap-1 text-base font-medium">
+                {links.map((entry) => {
+                  const target = withLocale(currentLocale, entry.slug);
+                  const active = isActive(target, entry.slug);
+                  return (
+                    <Link
+                      key={`${entry.slug || "home"}-mobile`}
+                      href={target}
+                      aria-current={active ? "page" : undefined}
+                      className={cn(
+                        "rounded-xl px-3 py-2 transition",
+                        "text-muted-foreground hover:text-foreground hover:bg-muted/40",
+                        active && "bg-primary text-primary-foreground hover:bg-primary"
+                      )}
+                    >
+                      {entry.label}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </div>
+          </div>
+        )}
       </div>
     </header>
   );

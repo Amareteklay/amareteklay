@@ -1,56 +1,126 @@
 @import "tailwindcss";
-/* Optional plugins */
 @plugin "@tailwindcss/typography";
 
-@layer base {
-  :root {
-    color-scheme: light;
-    --ring-color: 238 84% 67%;
-    --surface: 0 0% 100%;
-    --muted: 224 16% 60%;
-  }
+/* 1) Theme tokens (Tailwind v4) */
+@theme {
+  /* Colors (light) */
+  --color-background: hsl(0 0% 100%);
+  --color-foreground: hsl(240 10% 3.9%);
 
-  .dark {
-    color-scheme: dark;
-    --ring-color: 268 92% 75%;
-    --surface: 222 30% 15%;
-    --muted: 214 25% 68%;
-  }
+  --color-card: hsl(0 0% 100%);
+  --color-card-foreground: hsl(240 10% 3.9%);
+
+  --color-popover: hsl(0 0% 100%);
+  --color-popover-foreground: hsl(240 10% 3.9%);
+
+  --color-primary: hsl(222.2 47.4% 11.2%);
+  --color-primary-foreground: hsl(210 40% 98%);
+
+  --color-secondary: hsl(210 40% 96.1%);
+  --color-secondary-foreground: hsl(222.2 47.4% 11.2%);
+
+  --color-muted: hsl(210 40% 96.1%);
+  --color-muted-foreground: hsl(215.4 16.3% 46.9%);
+
+  --color-accent: hsl(210 40% 96.1%);
+  --color-accent-foreground: hsl(222.2 47.4% 11.2%);
+
+  --color-destructive: hsl(0 84.2% 60.2%);
+  --color-destructive-foreground: hsl(210 40% 98%);
+
+  --color-border: hsl(214.3 31.8% 91.4%);
+  --color-input: hsl(214.3 31.8% 91.4%);
+  --color-ring: hsl(222.2 84% 4.9%);
+
+  /* Radius */
+  --radius: 0.75rem;
+}
+
+/* 2) Dark overrides */
+.dark {
+  --color-background: hsl(240 10% 3.9%);
+  --color-foreground: hsl(210 40% 98%);
+
+  --color-card: hsl(240 10% 3.9%);
+  --color-card-foreground: hsl(210 40% 98%);
+
+  --color-popover: hsl(240 10% 3.9%);
+  --color-popover-foreground: hsl(210 40% 98%);
+
+  --color-primary: hsl(210 40% 98%);
+  --color-primary-foreground: hsl(222.2 47.4% 11.2%);
+
+  --color-secondary: hsl(240 3.7% 15.9%);
+  --color-secondary-foreground: hsl(210 40% 98%);
+
+  --color-muted: hsl(240 3.7% 15.9%);
+  --color-muted-foreground: hsl(215 20.2% 65.1%);
+
+  --color-accent: hsl(240 3.7% 15.9%);
+  --color-accent-foreground: hsl(210 40% 98%);
+
+  --color-destructive: hsl(0 62.8% 30.6%);
+  --color-destructive-foreground: hsl(210 40% 98%);
+
+  --color-border: hsl(240 3.7% 15.9%);
+  --color-input: hsl(240 3.7% 15.9%);
+  --color-ring: hsl(210 40% 98%);
+}
+
+@layer base {
+  html { color-scheme: light; }
+  html.dark { color-scheme: dark; }
 
   body {
-    font-feature-settings: "tnum" on, "cv11" on, "ss01" on;
-    @apply min-h-screen bg-[#f6f6fb] text-slate-900 dark:bg-[#05010d] dark:text-slate-100 antialiased;
+    /* No hard-coded hex: use tokens */
+    @apply min-h-screen bg-background text-foreground antialiased;
+
+    /* Light gradient background */
     background-image:
-      radial-gradient(circle at 20% 20%, rgba(99, 102, 241, 0.16), transparent 45%),
-      radial-gradient(circle at 80% 0%, rgba(45, 212, 191, 0.14), transparent 40%),
-      linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 30%);
+      radial-gradient(circle at 20% 20%, rgba(99,102,241,0.16), transparent 45%),
+      radial-gradient(circle at 80% 0%, rgba(45,212,191,0.14), transparent 40%),
+      linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 30%);
+  }
+  .dark body {
+    /* Dark variant of your background */
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(99,102,241,0.12), transparent 45%),
+      radial-gradient(circle at 80% 0%, rgba(45,212,191,0.10), transparent 40%),
+      linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0) 30%);
   }
 
-  ::selection {
-    @apply bg-indigo-500/80 text-white;
-  }
+  ::selection { @apply bg-primary text-primary-foreground; }
 
-  a {
-    @apply transition-colors duration-200 text-current;
-  }
+  a { @apply transition-colors duration-200 text-inherit; }
 
-  .container {
-    @apply px-4 sm:px-6 lg:px-10;
-  }
+  .container { @apply px-4 sm:px-6 lg:px-10; }
 }
 
 @layer components {
   .surface-card {
-    @apply rounded-3xl border border-black/5 dark:border-white/10 bg-white/70 dark:bg-white/5 shadow-[0_25px_70px_-35px_rgba(15,23,42,0.75)] backdrop-blur;
+    /* Use theme tokens instead of hard-coded white/black */
+    @apply rounded-3xl border border-border bg-card/70 shadow-[0_25px_70px_-35px_rgba(15,23,42,0.75)] backdrop-blur;
   }
 
-  .hover-lift {
-    @apply transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-2xl;
-  }
+  .hover-lift { @apply transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-2xl; }
 
   .pill {
-    @apply inline-flex items-center gap-2 rounded-full border border-black/5 dark:border-white/15 px-4 py-1.5 text-xs tracking-[0.25em] uppercase text-slate-600 dark:text-slate-200;
+    @apply inline-flex items-center gap-2 rounded-full border border-border px-4 py-1.5 text-xs tracking-[0.25em] uppercase text-muted-foreground;
   }
 }
 
-.prose { @apply max-w-none; }
+/* Typography plugin colors follow your tokens */
+.prose {
+  @apply max-w-none;
+  --tw-prose-body: var(--color-foreground);
+  --tw-prose-headings: var(--color-foreground);
+  --tw-prose-links: var(--color-primary);
+  --tw-prose-bold: var(--color-foreground);
+  --tw-prose-quotes: var(--color-foreground);
+  --tw-prose-quote-borders: var(--color-border);
+  --tw-prose-counters: var(--color-muted-foreground);
+  --tw-prose-bullets: var(--color-muted-foreground);
+  --tw-prose-hr: var(--color-border);
+  --tw-prose-code: var(--color-foreground);
+  --tw-prose-pre-bg: var(--color-muted);
+}
