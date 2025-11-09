@@ -4,7 +4,7 @@ import "./globals.css";
 import { ThemeProvider } from "next-themes";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import { DEFAULT_LOCALE, isSupportedLocale, type Locale } from "@/lib/locales";
+import { DEFAULT_LOCALE } from "@/lib/locales";
 
 export const metadata: Metadata = {
   title: "Amare Teklay",
@@ -13,28 +13,14 @@ export const metadata: Metadata = {
   openGraph: { images: ["/og-default.png"] },
 };
 
-export default async function RootLayout({
-  children,
-  params,
-}: {
-  children: ReactNode;
-  params: Promise<{ locale?: string }>;
-}) {
-  const { locale: localeParam } = await params;
-
-  // Narrow to string first; then validate with the type guard
-  const locale: Locale =
-    typeof localeParam === "string" && isSupportedLocale(localeParam)
-      ? (localeParam as Locale)
-      : DEFAULT_LOCALE;
-
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={DEFAULT_LOCALE} suppressHydrationWarning>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Navbar locale={locale} />
+          <Navbar /> {/* no locale prop */}
           <main className="min-h-[70vh]">{children}</main>
-          <Footer locale={locale} />
+          <Footer /> {/* no locale prop */}
         </ThemeProvider>
       </body>
     </html>

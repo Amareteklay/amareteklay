@@ -8,16 +8,18 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-export default async function LocaleLayout({
+export default function LocaleLayout({
   children,
   params,
 }: {
   children: ReactNode;
-  params: Promise<{ locale: string }>;
+  params: { locale: string }; // <-- not a Promise
 }) {
-  const { locale } = await params;
+  const { locale } = params;
 
   if (!isSupportedLocale(locale)) return notFound();
 
+  // No <html> here; root layout already renders it.
+  // Navbar/Footer derive locale from the URL, so no props needed.
   return <>{children}</>;
 }
