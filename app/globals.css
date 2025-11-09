@@ -3,36 +3,34 @@
 
 /* 1) Theme tokens (Tailwind v4) */
 @theme {
-  /* Colors (light) */
+  /* LIGHT (higher contrast) */
   --color-background: hsl(0 0% 100%);
-  --color-foreground: hsl(240 10% 3.9%);
-
+  --color-foreground: hsl(222 47% 11%);
   --color-card: hsl(0 0% 100%);
-  --color-card-foreground: hsl(240 10% 3.9%);
+  --color-card-foreground: hsl(222 47% 11%);
 
   --color-popover: hsl(0 0% 100%);
-  --color-popover-foreground: hsl(240 10% 3.9%);
+  --color-popover-foreground: hsl(222 47% 11%);
 
-  --color-primary: hsl(222.2 47.4% 11.2%);
-  --color-primary-foreground: hsl(210 40% 98%);
+  --color-primary: hsl(222 100% 45%);           /* strong indigo */
+  --color-primary-foreground: hsl(0 0% 100%);
 
-  --color-secondary: hsl(210 40% 96.1%);
-  --color-secondary-foreground: hsl(222.2 47.4% 11.2%);
+  --color-secondary: hsl(210 40% 96%);
+  --color-secondary-foreground: hsl(222 47% 15%);
 
-  --color-muted: hsl(210 40% 96.1%);
-  --color-muted-foreground: hsl(215.4 16.3% 46.9%);
+  --color-muted: hsl(210 40% 96%);
+  --color-muted-foreground: hsl(215 25% 35%);   /* darker for readability */
 
-  --color-accent: hsl(210 40% 96.1%);
-  --color-accent-foreground: hsl(222.2 47.4% 11.2%);
+  --color-accent: hsl(210 40% 95%);
+  --color-accent-foreground: hsl(222 47% 15%);
 
-  --color-destructive: hsl(0 84.2% 60.2%);
-  --color-destructive-foreground: hsl(210 40% 98%);
+  --color-destructive: hsl(0 72% 45%);
+  --color-destructive-foreground: hsl(0 0% 100%);
 
-  --color-border: hsl(214.3 31.8% 91.4%);
-  --color-input: hsl(214.3 31.8% 91.4%);
-  --color-ring: hsl(222.2 84% 4.9%);
+  --color-border: hsl(215 20% 72%);             /* ~slate-300 for clear separation */
+  --color-input: hsl(215 20% 72%);
+  --color-ring: hsl(222 100% 45%);
 
-  /* Radius */
   --radius: 0.75rem;
 }
 
@@ -72,17 +70,16 @@
   html.dark { color-scheme: dark; }
 
   body {
-    /* No hard-coded hex: use tokens */
     @apply min-h-screen bg-background text-foreground antialiased;
 
-    /* Light gradient background */
+    /* Light gradient background (subtle, won’t wash content) */
     background-image:
-      radial-gradient(circle at 20% 20%, rgba(99,102,241,0.16), transparent 45%),
-      radial-gradient(circle at 80% 0%, rgba(45,212,191,0.14), transparent 40%),
-      linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 30%);
+      radial-gradient(circle at 20% 20%, rgba(99,102,241,0.12), transparent 45%),
+      radial-gradient(circle at 80% 0%, rgba(45,212,191,0.10), transparent 40%),
+      linear-gradient(180deg, rgba(255,255,255,0.85) 0%, rgba(255,255,255,0) 30%);
   }
   .dark body {
-    /* Dark variant of your background */
+    /* Dark variant */
     background-image:
       radial-gradient(circle at 20% 20%, rgba(99,102,241,0.12), transparent 45%),
       radial-gradient(circle at 80% 0%, rgba(45,212,191,0.10), transparent 40%),
@@ -91,21 +88,25 @@
 
   ::selection { @apply bg-primary text-primary-foreground; }
 
-  a { @apply transition-colors duration-200 text-inherit; }
+  /* Links are readable in light, pop in dark */
+  a { @apply transition-colors duration-200 text-foreground/90 hover:text-primary; }
 
   .container { @apply px-4 sm:px-6 lg:px-10; }
 }
 
 @layer components {
+  /* Solid panels in light mode for contrast; softer in dark */
   .surface-card {
-    /* Use theme tokens instead of hard-coded white/black */
-    @apply rounded-3xl border border-border bg-card/70 shadow-[0_25px_70px_-35px_rgba(15,23,42,0.75)] backdrop-blur;
+    @apply rounded-3xl border border-border bg-card text-card-foreground shadow-sm;
+  }
+  .dark .surface-card {
+    @apply bg-card/70 shadow-[0_25px_70px_-35px_rgba(15,23,42,0.75)] backdrop-blur;
   }
 
   .hover-lift { @apply transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-2xl; }
 
   .pill {
-    @apply inline-flex items-center gap-2 rounded-full border border-border px-4 py-1.5 text-xs tracking-[0.25em] uppercase text-muted-foreground;
+    @apply inline-flex items-center gap-2 rounded-full border border-border px-4 py-1.5 text-xs uppercase tracking-[0.25em] text-foreground/80;
   }
 }
 
@@ -122,5 +123,5 @@
   --tw-prose-bullets: var(--color-muted-foreground);
   --tw-prose-hr: var(--color-border);
   --tw-prose-code: var(--color-foreground);
-  --tw-prose-pre-bg: var(--color-muted);
+  --tw-prose-pre-bg: hsl(210 40% 98%); /* light code bg for readability */
 }

@@ -9,27 +9,35 @@ type Props = { params: Promise<{ locale: Locale }> };
 
 export default async function AboutPage({ params }: Props) {
   const { locale } = await params;
-  const raw = await apiGet<unknown>("/content/pages/about/", locale, { revalidate, addQueryParam: true });
+  const raw = await apiGet<unknown>("/content/pages/about/", locale, {
+    revalidate,
+    addQueryParam: true,
+  });
   const page = normalizePage(LoosePage.parse(raw));
 
   return (
     <section className="container max-w-3xl space-y-10 py-16 lg:py-24">
-  <div className="pill w-fit bg-gradient-to-r from-blue-500/10 to-emerald-500/10 text-sm font-medium text-blue-600 dark:text-emerald-400">
-    About
-  </div>
+      {/* Section pill */}
+      <div className="pill w-fit bg-secondary/60 text-foreground">
+        About
+      </div>
 
-  <article className="rounded-2xl border border-slate-200/60 bg-white/80 p-8 shadow-sm backdrop-blur-sm transition hover:shadow-md dark:border-slate-700 dark:bg-slate-900/60 dark:hover:bg-slate-900/80">
-    <div className="prose prose-slate max-w-none prose-h1:mt-0 prose-headings:font-semibold prose-headings:tracking-tight prose-a:text-blue-600 hover:prose-a:text-blue-500 dark:prose-invert dark:prose-a:text-emerald-400">
-      <h1 className="mb-6 text-4xl font-bold tracking-tight">{page.title}</h1>
-      {page.content_html ? (
-        <div dangerouslySetInnerHTML={{ __html: page.content_html }} />
-      ) : (
-        <p className="italic text-slate-500 dark:text-slate-400">
-          Content coming soon.
-        </p>
-      )}
-    </div>
-  </article>
-</section>
+      {/* Content card */}
+      <article className="surface-card p-8 transition hover:shadow-md">
+        <div className="prose max-w-none prose-headings:font-semibold prose-headings:tracking-tight prose-a:underline-offset-2 hover:prose-a:text-primary">
+          <h1 className="mb-6 text-4xl font-bold tracking-tight text-foreground">
+            {page.title}
+          </h1>
+
+          {page.content_html ? (
+            <div dangerouslySetInnerHTML={{ __html: page.content_html }} />
+          ) : (
+            <p className="italic text-muted-foreground">
+              Content coming soon.
+            </p>
+          )}
+        </div>
+      </article>
+    </section>
   );
 }
