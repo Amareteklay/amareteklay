@@ -5,6 +5,7 @@ import { ThemeProvider } from "next-themes";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { DEFAULT_LOCALE } from "@/lib/locales";
+import LangAttr from "@/components/system/LangAttr"; // NEW
 
 export const metadata: Metadata = {
   title: "Amare Teklay",
@@ -17,6 +18,9 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang={DEFAULT_LOCALE} suppressHydrationWarning>
       <body>
+        {/* Sets <html lang="..."> based on URL (e.g., /en, /sv) */}
+        <LangAttr />
+
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Navbar /> {/* Navbar derives locale from the URL */}
           <main className="min-h-[70vh]">{children}</main>

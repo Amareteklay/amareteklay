@@ -1,3 +1,4 @@
+// app/[locale]/(site)/page.tsx
 import Link from "next/link";
 import type { Locale } from "@/lib/locales";
 
@@ -18,19 +19,28 @@ const featureCards = [
   },
 ];
 
-type Props = { params: Promise<{ locale: Locale }> };
+type ParamsObj = { locale: Locale };
+type Props =
+  | { params: ParamsObj }
+  | { params: Promise<ParamsObj> };
 
-export default async function HomePage({ params }: Props) {
-  const { locale } = await params;
+export default async function HomePage(props: Props) {
+  const { locale } =
+    "then" in (props as any).params
+      ? await (props as { params: Promise<ParamsObj> }).params
+      : (props as { params: ParamsObj }).params;
+
   const localeHref = (slug?: string) => `/${locale}${slug ? `/${slug}` : ""}`;
 
   return (
-    <section className="container space-y-12 py-16 lg:space-y-16 lg:py-24">
+    <main id="main" className="container space-y-12 py-16 lg:space-y-16 lg:py-24">
       <div className="grid gap-10 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
-        <div className="space-y-8">
-          <div className="pill w-fit">Public health / Adaptation / Data</div>
+        <section className="space-y-8">
+          <div className="pill w-fit" aria-hidden>
+            Public health / Adaptation / Data
+          </div>
 
-          <div className="space-y-5">
+          <header className="space-y-5">
             <h1 className="text-4xl font-semibold tracking-tight text-foreground lg:text-5xl">
               Research, writing, and product work for resilient systems.
             </h1>
@@ -38,10 +48,9 @@ export default async function HomePage({ params }: Props) {
               I help teams translate field insight into clear narratives and tools—bridging climate adaptation,
               epidemiology, and data platforms.
             </p>
-          </div>
+          </header>
 
           <div className="flex flex-wrap gap-4">
-            {/* Primary CTA */}
             <Link
               href={localeHref("writing")}
               className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition hover:opacity-90"
@@ -50,7 +59,6 @@ export default async function HomePage({ params }: Props) {
               <span aria-hidden>&gt;</span>
             </Link>
 
-            {/* Secondary / Outline CTA */}
             <Link
               href={localeHref("projects")}
               className="inline-flex items-center gap-2 rounded-full border border-border px-6 py-3 text-sm font-semibold text-foreground transition hover:bg-secondary/60"
@@ -58,10 +66,9 @@ export default async function HomePage({ params }: Props) {
               Explore projects
             </Link>
           </div>
-        </div>
+        </section>
 
-        {/* Right card */}
-        <div className="surface-card hover-lift p-8">
+        <aside className="surface-card hover-lift p-8">
           <p className="text-sm uppercase tracking-[0.4em] text-primary">Focus</p>
           <h2 className="mt-4 text-2xl font-semibold text-foreground">
             Working across research, implementation, and storytelling.
@@ -80,26 +87,29 @@ export default async function HomePage({ params }: Props) {
               Essays, briefs, and workshops to surface insight across teams.
             </li>
           </ul>
-        </div>
+        </aside>
       </div>
 
-      {/* Feature cards */}
-      <div className="grid gap-6 lg:grid-cols-2">
+      <section aria-label="Featured sections" className="grid gap-6 lg:grid-cols-2">
         {featureCards.map((card) => (
           <Link
             key={card.label}
             href={localeHref(card.slug)}
             className="surface-card hover-lift flex flex-col gap-4 p-6 transition-colors hover:bg-secondary/60"
           >
-            <span className="text-xs uppercase tracking-[0.4em] text-muted-foreground">{card.label}</span>
+            <span className="text-xs uppercase tracking-[0.4em] text-muted-foreground">
+              {card.label}
+            </span>
             <div>
               <h3 className="text-2xl font-semibold text-foreground">{card.title}</h3>
               <p className="mt-2 text-muted-foreground">{card.copy}</p>
             </div>
-            <span className="text-sm font-semibold text-primary">View {card.label.toLowerCase()}</span>
+            <span className="text-sm font-semibold text-primary">
+              View {card.label.toLowerCase()}
+            </span>
           </Link>
         ))}
-      </div>
-    </section>
+      </section>
+    </main>
   );
 }

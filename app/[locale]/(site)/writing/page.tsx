@@ -1,3 +1,4 @@
+// app/[locale]/writing/page.tsx
 import Link from "next/link";
 import { apiGet } from "@/lib/api";
 import { PaginatedPostsLoose } from "@/lib/types";
@@ -6,18 +7,36 @@ import type { Locale } from "@/lib/locales";
 
 export const revalidate = 60;
 
-type Props = { params: Promise<{ locale: Locale }> };
+type ParamsObj = { locale: Locale };
+type Props =
+  | { params: ParamsObj }
+  | { params: Promise<ParamsObj> }; // supports the Promise-params variant
 
-export default async function WritingPage({ params }: Props) {
-  // ⬇️ Unwrap the params Promise (Next 15 behavior for segment pages)
-  const { locale } = await params;
+export default async function WritingPage(props: Props) {
+  // Support both current and “Promise params” behavior
+  const { locale } =
+    "then" in (props as any).params
+      ? await (props as { params: Promise<ParamsObj> }).params
+      : (props as { params: ParamsObj }).params;
 
+  // Fetch raw -> validate with Zod -> normalize
   const data = await apiGet<unknown>("/content/posts/", locale, {
     revalidate,
-    addQueryParam: true,
+    addQueryParam: true, // appends ?lang=<locale> if missing
   });
 
-  const parsed = PaginatedPostsLoose.parse(data);
+  const parsed = (() => {
+    try {
+      return PaginatedPostsLoose.parse(data);
+    } catch (err) {
+      // Bubble up with helpful context while keeping a concise stack
+      const preview = JSON.stringify(data, null, 2).slice(0, 800);
+      throw new Error(
+        `Post list response failed validation.\n\nZod error: ${String(err)}\n\nResponse preview:\n${preview}`
+      );
+    }
+  })();
+
   const posts = parsed.results.map(normalizePost);
 
   const withLocale = (slug: string) =>
@@ -28,7 +47,9 @@ export default async function WritingPage({ params }: Props) {
       <div className="max-w-3xl space-y-4">
         <p className="pill">Writing</p>
         <div>
-          <h1 className="text-3xl font-semibold text-foreground">Dispatches &amp; field notes</h1>
+          <h1 className="text-3xl font-semibold text-foreground">
+            Dispatches &amp; field notes
+          </h1>
           <p className="mt-2 text-muted-foreground">
             Essays, briefings, and field reflections on adaptation, health systems, and data-led programs.
           </p>
@@ -49,7 +70,7 @@ export default async function WritingPage({ params }: Props) {
                     dateTime={p.published_at}
                     className="tracking-normal text-muted-foreground/80"
                   >
-                    {new Date(p.published_at).toLocaleDateString(undefined, {
+                    {new Date(p.published_at).toLocaleDateString(locale, {
                       year: "numeric",
                       month: "short",
                       day: "numeric",
