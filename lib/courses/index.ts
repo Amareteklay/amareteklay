@@ -33,7 +33,7 @@ export type CourseMeta = {
     modules: ModuleMeta[];
 };
 
-const en = (value: string): Record<Locale, string> => ({ en: value });
+const en = (value: string): Record<Locale, string> => ({ en: value, sv: value });
 
 const COURSES: CourseMeta[] = [
     {
