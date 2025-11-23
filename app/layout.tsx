@@ -17,7 +17,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang={DEFAULT_LOCALE} suppressHydrationWarning>
-      <body>
+      <body suppressHydrationWarning>
         {/* Sets <html lang="..."> based on URL (e.g., /en, /sv) */}
         <LangAttr />
 
