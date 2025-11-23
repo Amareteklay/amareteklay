@@ -12,7 +12,8 @@
   --color-popover: hsl(0 0% 100%);
   --color-popover-foreground: hsl(222 47% 11%);
 
-  --color-primary: hsl(250 95% 65%);             /* periwinkle/violet */
+  --color-primary: hsl(250 95% 65%);
+  /* periwinkle/violet */
   --color-primary-foreground: hsl(0 0% 100%);
 
   --color-secondary: hsl(210 40% 96%);
@@ -69,66 +70,80 @@
 }
 
 @layer base {
-  html { color-scheme: light; }
-  html.dark { color-scheme: dark; }
+  html {
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
 
   body {
     @apply min-h-screen bg-background text-foreground antialiased;
 
     /* Modern gradient wash */
     background-image:
-      radial-gradient(circle at 20% 20%, rgba(139,92,246,0.14), transparent 45%),
-      radial-gradient(circle at 80% 0%, rgba(34,211,238,0.12), transparent 40%),
-      linear-gradient(180deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0) 30%);
-  }
-  .dark body {
-    background-image:
-      radial-gradient(circle at 20% 20%, rgba(139,92,246,0.14), transparent 45%),
-      radial-gradient(circle at 80% 0%, rgba(34,211,238,0.12), transparent 40%),
-      linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 30%);
+      radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.14), transparent 45%),
+      radial-gradient(circle at 80% 0%, rgba(34, 211, 238, 0.12), transparent 40%),
+      linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 30%);
   }
 
-  ::selection { @apply bg-primary text-primary-foreground; }
+  .dark body {
+    background-image:
+      radial-gradient(circle at 20% 20%, rgba(139, 92, 246, 0.14), transparent 45%),
+      radial-gradient(circle at 80% 0%, rgba(34, 211, 238, 0.12), transparent 40%),
+      linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0) 30%);
+  }
+
+  ::selection {
+    @apply bg-primary text-primary-foreground;
+  }
 
   /* Global link style — subtle violet→cyan underline */
   a {
     position: relative;
     text-decoration: none;
-    background-image: linear-gradient(
-      to right,
-      var(--color-primary),
-      var(--color-brand-cyan)
-    );
+    background-image: linear-gradient(to right,
+        var(--color-primary),
+        var(--color-brand-cyan));
     background-size: 0% 2px;
     background-repeat: no-repeat;
     background-position: 0 100%;
     transition: background-size 0.25s ease, color 0.25s ease;
   }
+
   a:hover {
     background-size: 100% 2px;
     color: var(--color-primary);
   }
+
   a:focus-visible {
     outline: none;
     background-size: 100% 2px;
   }
+
   a.no-underline {
     background-image: none !important;
     background-size: 0 0 !important;
   }
 
-  .container { @apply px-4 sm:px-6 lg:px-10; }
+  .container {
+    @apply px-4 sm:px-6 lg:px-10;
+  }
 }
 
 @layer components {
   .surface-card {
     @apply rounded-3xl border border-border bg-card text-card-foreground shadow-sm;
   }
+
   .dark .surface-card {
-    @apply bg-card/70 shadow-[0_25px_70px_-35px_rgba(0,0,0,0.6)] backdrop-blur;
+    @apply bg-card/70 shadow-2xl backdrop-blur;
   }
 
-  .hover-lift { @apply transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-2xl; }
+  .hover-lift {
+    @apply transition-transform duration-300 ease-out hover:-translate-y-1 hover:shadow-2xl;
+  }
 
   .pill {
     @apply inline-flex items-center gap-2 rounded-full border border-border px-4 py-1.5 text-xs uppercase tracking-[0.25em] text-foreground/80;
@@ -139,21 +154,24 @@
     position: relative;
     @apply rounded-full px-4 py-2 text-sm font-medium text-muted-foreground transition-colors;
   }
-  .navlink:hover { @apply text-primary; }
+
+  .navlink:hover {
+    @apply text-primary;
+  }
+
   .navlink--active {
     color: var(--color-primary);
   }
+
   .navlink--active::before {
     content: "";
     position: absolute;
     inset: 0;
     z-index: -1;
     border-radius: 9999px;
-    background-image: linear-gradient(
-      to right,
-      color-mix(in oklab, var(--color-primary) 20%, transparent),
-      color-mix(in oklab, var(--color-brand-cyan) 20%, transparent)
-    );
+    background-image: linear-gradient(to right,
+        color-mix(in oklab, var(--color-primary) 20%, transparent),
+        color-mix(in oklab, var(--color-brand-cyan) 20%, transparent));
   }
 }
 
@@ -171,4 +189,157 @@
   --tw-prose-hr: var(--color-border);
   --tw-prose-code: var(--color-foreground);
   --tw-prose-pre-bg: hsl(220 40% 98%);
+}
+
+/* Spatial Theme - Deep Space / Futuristic */
+/* Applied to body for global scope */
+/* Spatial Theme - Deep Space / Futuristic */
+
+/* 1) LIGHT Spatial Mode (Clean, High-Tech, "Lab" Feel) */
+body.spatial-mode {
+  --color-background: hsl(210 40% 98%);
+  /* Soft white/blue */
+  --color-foreground: hsl(222 47% 11%);
+  /* Dark slate */
+
+  --color-card: rgba(255, 255, 255, 0.7);
+  --color-card-foreground: hsl(222 47% 11%);
+
+  --color-popover: rgba(255, 255, 255, 0.9);
+  --color-popover-foreground: hsl(222 47% 11%);
+
+  --color-primary: hsl(250 95% 65%);
+  /* Electric Purple */
+  --color-primary-foreground: hsl(0 0% 100%);
+
+  --color-secondary: hsl(210 40% 96%);
+  --color-secondary-foreground: hsl(222 47% 15%);
+
+  --color-muted: hsl(220 35% 95%);
+  --color-muted-foreground: hsl(224 25% 45%);
+
+  --color-accent: hsl(190 90% 45%);
+  /* Cyan (darker for light mode) */
+  --color-accent-foreground: hsl(0 0% 100%);
+
+  --color-destructive: hsl(0 72% 50%);
+  --color-destructive-foreground: hsl(0 0% 100%);
+
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-input: rgba(0, 0, 0, 0.08);
+  --color-ring: hsl(250 95% 65%);
+
+  --radius: 1rem;
+
+  /* Light mode background */
+  background-color: var(--color-background);
+  background-image:
+    radial-gradient(circle at 15% 50%, rgba(139, 92, 246, 0.08), transparent 40%),
+    radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.08), transparent 40%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 100%);
+}
+
+/* 2) DARK Spatial Mode (Deep Space, Neon) */
+html.dark body.spatial-mode {
+  --color-background: hsl(240 6% 6%);
+  /* #03030b */
+  --color-foreground: hsl(210 40% 98%);
+  /* #f8fafc */
+
+  --color-card: hsl(240 6% 8%);
+  --color-card-foreground: hsl(210 40% 98%);
+
+  --color-popover: hsl(240 6% 8%);
+  --color-popover-foreground: hsl(210 40% 98%);
+
+  --color-primary: hsl(270 95% 75%);
+  /* Electric Purple Lighter */
+  --color-primary-foreground: hsl(0 0% 100%);
+
+  --color-secondary: hsl(240 5% 15%);
+  --color-secondary-foreground: hsl(210 40% 98%);
+
+  --color-muted: hsl(240 5% 15%);
+  --color-muted-foreground: hsl(215 20% 75%);
+
+  --color-accent: hsl(190 90% 50%);
+  /* Cyan */
+  --color-accent-foreground: hsl(210 40% 98%);
+
+  --color-destructive: hsl(0 84% 60%);
+  --color-destructive-foreground: hsl(0 0% 100%);
+
+  --color-border: hsl(240 5% 25%);
+  --color-input: hsl(240 5% 25%);
+  --color-ring: hsl(190 90% 50%);
+
+  /* Dark mode background */
+  background-color: var(--color-background);
+  background-image:
+    radial-gradient(circle at 15% 50%, rgba(76, 29, 149, 0.2), transparent 40%),
+    radial-gradient(circle at 85% 30%, rgba(6, 182, 212, 0.15), transparent 40%),
+    radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.03), transparent 30%);
+}
+
+/* Navbar overrides - Light Mode */
+body.spatial-mode header nav a {
+  color: hsl(var(--muted-foreground));
+}
+
+body.spatial-mode header nav a:hover {
+  color: hsl(var(--foreground));
+}
+
+body.spatial-mode header .bg-card\/95 {
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Navbar overrides - Dark Mode */
+html.dark body.spatial-mode header .bg-card\/95 {
+  background-color: rgba(3, 3, 11, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Glass utilities */
+/* Glass utilities */
+.spatial-glass {
+  /* Light Mode Defaults (Clean Lab Look) */
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+}
+
+.dark .spatial-glass {
+  /* Dark Mode Overrides (Deep Space) */
+  background: rgba(15, 15, 25, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+
+.spatial-border-glow {
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.spatial-border-glow::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.5), rgba(56, 189, 248, 0.5));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.spatial-border-glow:hover::after {
+  opacity: 1;
+}
+
+.text-glow {
+  text-shadow: 0 0 30px rgba(56, 189, 248, 0.4);
 }

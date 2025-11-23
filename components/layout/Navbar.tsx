@@ -16,6 +16,7 @@ const FALLBACK_LINKS: NavItem[] = [
   { slug: "about", label: "About" },
   { slug: "writing", label: "Writing" },
   { slug: "projects", label: "Projects" },
+  { slug: "courses", label: "Courses" },
   { slug: "contact", label: "Contact" },
 ];
 
@@ -110,7 +111,28 @@ export default function Navbar() {
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
 
-  const items = nav ?? FALLBACK_LINKS;
+  const items = useMemo(() => {
+    // Create a shallow copy to avoid mutating the original array
+    let list = [...(nav ?? FALLBACK_LINKS)];
+
+    // Remove existing "Courses" if present to ensure we control the position
+    list = list.filter((item) => item.slug !== "courses");
+
+    // Find index of "Contact"
+    const contactIndex = list.findIndex((item) => item.slug === "contact");
+
+    const coursesItem = { slug: "courses", label: "Courses" };
+
+    if (contactIndex !== -1) {
+      // Insert before Contact
+      list.splice(contactIndex, 0, coursesItem);
+    } else {
+      // Append if Contact not found
+      list.push(coursesItem);
+    }
+
+    return list;
+  }, [nav]);
 
   return (
     <header className="sticky top-4 z-40">
@@ -162,7 +184,7 @@ export default function Navbar() {
                     "rounded-full px-4 py-2 transition",
                     "text-muted-foreground hover:text-foreground",
                     active &&
-                      "border border-border bg-primary text-primary-foreground shadow-sm hover:text-primary-foreground"
+                    "border border-border bg-primary text-primary-foreground shadow-sm hover:text-primary-foreground"
                   )}
                 >
                   {entry.label}
