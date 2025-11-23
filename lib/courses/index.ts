@@ -249,6 +249,7 @@ export function getCourseBySlug(courseSlug: string, locale: Locale) {
     descriptionLabel: t(course.description, locale),
     modules,
     lessons: allLessons, // Keep a flat list for easy access if needed, or for backward compat if we want
+    totalLessons: allLessons.length,
   };
 }
 
