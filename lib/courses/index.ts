@@ -1,9 +1,29 @@
-﻿import type { Locale } from "../locales";
+import type { Locale } from "../locales";
 
 export type LessonContent = {
     core: string;
     moves: string[];
     practice: string[];
+    full?: LessonFullContent;
+};
+
+export type LessonFullContent = {
+    essence: string[];
+    whyMatters: string[];
+    keyConcepts: string[];
+    examples: string[];
+    extended: string[];
+    interactions: {
+        world: string;
+        mind: string;
+        skill: string;
+        social: string;
+        meaning: string;
+    };
+    prompts: string[];
+    exercises: string[];
+    advanced?: string[];
+    summary: string[];
 };
 
 export type LessonMeta = {
@@ -63,7 +83,62 @@ const COURSES: CourseMeta[] = [
                             ],
                             practice: [
                                 "Write a one-page reflection on three shifts that blindsided you and why."
-                            ]
+                            ],
+                            full: {
+                                essence: [
+                                    "The world has shifted from slow, predictable curves to erratic, compound accelerations. Linear intuition--built for seasons, decades, and stable institutions--no longer matches the pace or coupling of modern systems. The mismatch between our inherited sense of time and the world's exponential dynamics creates friction, anxiety, and strategic blindness.",
+                                    "Homo Adapticus begins with accepting that change is no longer an event but an environment. Our task is to build cognitive elasticity, emotional range, and operational practices that metabolize volatility instead of resisting it. This is not about liking change; it is about respecting reality enough to evolve with it."
+                                ],
+                                whyMatters: [
+                                    "Failing to recognize the new regime invites repeated surprises: market shocks, career obsolescence, brittle strategies, and emotional whiplash. In a world of accelerating AI, supply chains, and information flows, static plans decay faster than they are written. Ignorance is not neutral; it compounds risk.",
+                                    "Homo Adapticus is a posture that treats change as a constant input, not a sporadic interruption. Seeing the new regime clearly lets you shift from defensive adaptation ('fix what broke') to proactive adaptation ('surf what is forming'). It anchors all later practices--mental models, emotional regulation, and adaptive identity."
+                                ],
+                                keyConcepts: [
+                                    "Exponential vs. Linear Intuition: Most human planning assumes straight lines. Today's curves bend upward; small delays in response create outsized gaps.",
+                                    "Tight Coupling: Systems are densely linked--tech, finance, geopolitics, culture. Local events propagate globally in minutes, not months.",
+                                    "Compressed Half-Life of Skills: What was durable for a decade may now last a year; static expertise depreciates faster.",
+                                    "Information Deluge: Signal is submerged in noise; discernment replaces memorization as the scarce skill.",
+                                    "Environmental AI: AI is no longer a tool you pick up; it is a background force altering cognition, markets, and meaning.",
+                                    "Volatility as Feedback: Surprises are data about model mismatch, not just bad luck."
+                                ],
+                                examples: [
+                                    "Personal: A marketing professional ignores AI copy tools. Within a year, junior colleagues outpace her output; she feels blindsided, anxious, and questions her career.",
+                                    "Professional: A startup builds a two-year roadmap assuming stable APIs. A major platform shifts policy; the roadmap becomes obsolete, burning cash and morale.",
+                                    "Societal/AI: A city's hiring practices rely on resumes; AI job-matching platforms change employer demand patterns in months, reshaping local labor without warning."
+                                ],
+                                extended: [
+                                    "The new regime blends exponential tech with dense interdependence. When systems couple, failure or innovation in one node ripples through others. Traditional risk buffers--time, distance, bureaucracy--shrink. This accelerates both upside (rapid compounding) and downside (cascading shocks).",
+                                    "Misconceptions persist: many think 'things have always changed' and dismiss acceleration claims. But the binding difference is speed and coupling. A shipping delay once meant weeks; now it destabilizes just-in-time manufacturing across continents. AI-generated misinformation can traverse millions before corrections arrive.",
+                                    "Hidden mechanisms include algorithmic feedback loops (recommendation systems steering attention), financial auto-trading amplifying shocks, and AI tools shifting cognitive labor. Complexity demands frequent model updates; the cost of being wrong rises as error propagates faster."
+                                ],
+                                interactions: {
+                                    world: "Recognize external acceleration as baseline; plan with contingencies and optionality.",
+                                    mind: "Train to notice discomfort as a signal of model mismatch; practice rapid re-interpretation.",
+                                    skill: "Prioritize meta-skills (learning agility, synthesis) over static domain knowledge.",
+                                    social: "Build networks that provide fast, diverse signals; slow networks delay reality checks.",
+                                    meaning: "Anchor in values that permit change; avoid identities tied to obsolete contexts."
+                                },
+                                prompts: [
+                                    "Where have you been surprised twice by the same kind of change?",
+                                    "Which parts of your life still assume linear progress?",
+                                    "What is one belief you hold that would fail if your industry doubled its pace?",
+                                    "How do you currently detect model mismatch?",
+                                    "Whose perspective could shorten your learning loop about external shifts?",
+                                    "What makes you most resistant to acknowledging acceleration?"
+                                ],
+                                exercises: [
+                                    "Acceleration Scan (20 min): List three changes in your field in the last year; map their speed and coupling effects.",
+                                    "Roadmap Check (15 min): Take one plan you own and add two trigger points where you would pivot if conditions shift.",
+                                    "Signal Sources (15 min): Identify three faster, more diverse information sources; subscribe and set a weekly review."
+                                ],
+                                advanced: [
+                                    "Volatility Simulation (30-45 min): Run a tabletop exercise where your primary tool or vendor fails overnight. Outline a 14-day response, including communication, alternative workflows, and decision checkpoints."
+                                ],
+                                summary: [
+                                    "The world's regime has changed: faster curves, tighter links, shorter half-lives. Treat acceleration as the default environment.",
+                                    "Homo Adapticus begins with acknowledging this and building reflexes--cognitive, emotional, operational--that metabolize volatility rather than deny it."
+                                ]
+                            }
                         }
                     },
                     {
@@ -79,7 +154,60 @@ const COURSES: CourseMeta[] = [
                             ],
                             practice: [
                                 "Build a cause-effect chain for your industry showing how the three accelerations interact."
-                            ]
+                            ],
+                            full: {
+                                essence: [
+                                    "Three forces--technology, complexity, and information--do not just add; they multiply. Technology increases capability and pace. Complexity entwines systems so changes cascade. Information floods perception, making discernment the scarce skill. Together, they form a flywheel that speeds up itself.",
+                                    "Addressing one acceleration in isolation fails. Faster tech without complexity awareness invites fragile architectures. Complexity without information hygiene breeds noise and paralysis. Information without technological literacy leads to misapplied tools."
+                                ],
+                                whyMatters: [
+                                    "Homo Adapticus must see the flywheel, not just its parts, to steer rather than react. Ignoring the triad yields brittle plans: new tools adopted without governance, projects collapsing under hidden dependencies, teams drowning in dashboards that obscure rather than reveal.",
+                                    "The triad shapes markets, careers, and cognition. Understanding it unlocks leverage and reduces fragility."
+                                ],
+                                keyConcepts: [
+                                    "Tech as Pacemaker: Tools shorten cycles; AI agents now compress hours into minutes.",
+                                    "Complexity as Coupler: More nodes and dependencies mean second-order effects dominate.",
+                                    "Information as Surplus: Abundance devalues recall, elevates curation and synthesis.",
+                                    "Feedback Flywheel: Each acceleration fuels the others--tech creates data, data increases complexity, complexity demands more tech.",
+                                    "Fragility vs. Optionality: Dense systems fail hard unless designed with buffers and options."
+                                ],
+                                examples: [
+                                    "Personal: A freelancer stitches together many SaaS tools; a small API change breaks her invoicing, delaying payments.",
+                                    "Professional: A product team ships an AI feature that creates more user data, which overwhelms their analytics pipeline, obscuring real insights.",
+                                    "Societal/AI: A city deploys smart sensors; the data volume requires new storage and analysis layers, introducing cybersecurity risks and governance challenges."
+                                ],
+                                extended: [
+                                    "Technology acceleration is visible: GPUs, model releases, automation tools. But complexity acceleration is quieter: integrations, inter-team dependencies, regulatory layers. Information acceleration floods attention; decision quality hinges on filtering, not collecting.",
+                                    "Misconception: more data means better decisions. Reality: more data increases variance of interpretations; without models and priors, noise dominates.",
+                                    "Hidden mechanism: automation increases coupling. When AI agents transact with each other, failures can be faster and less interpretable. Homo Adapticus treats the triad as a design constraint: simplify where possible, instrument for feedback, and keep optionality--alternative vendors, manual overrides, human-in-the-loop checkpoints."
+                                ],
+                                interactions: {
+                                    world: "Track the triad as macro forces; expect cross-domain ripples.",
+                                    mind: "Build mental filters; practice model updating under noise.",
+                                    skill: "Learn systems thinking and data literacy; pair with tool fluency.",
+                                    social: "Communicate interdependencies; align teams on constraints and fallback plans.",
+                                    meaning: "Avoid identity in a single tool; root in adaptable values."
+                                },
+                                prompts: [
+                                    "Where have you added a tool that increased hidden complexity?",
+                                    "How do you decide which information sources to drop?",
+                                    "What is your fallback when an integration fails?",
+                                    "Which dependencies could become single points of failure?",
+                                    "How do you detect signal versus noise in your domain?"
+                                ],
+                                exercises: [
+                                    "Dependency Map (25 min): Diagram one workflow, highlighting external APIs, data sources, and human approvals; mark fragility points.",
+                                    "Source Diet (15 min): Cut two information sources for a week; note changes in clarity.",
+                                    "Fallback Drill (20 min): For one tool, outline a manual or alternative process if it goes down tomorrow."
+                                ],
+                                advanced: [
+                                    "Resilience Sprint (45-60 min): With your team, pick a critical workflow and design an A/B fallback. Assign triggers and owners."
+                                ],
+                                summary: [
+                                    "Technology, complexity, and information accelerate together. See the flywheel, design for optionality, and cultivate discernment.",
+                                    "Homo Adapticus thrives by steering interlocking accelerations, not by adding more speed blindly."
+                                ]
+                            }
                         }
                     },
                     {
@@ -95,7 +223,61 @@ const COURSES: CourseMeta[] = [
                             ],
                             practice: [
                                 "Run a one-week AI audit: log each assist, benefit, and hidden cost."
-                            ]
+                            ],
+                            full: {
+                                essence: [
+                                    "AI has moved from tool to environment. It shapes cognition (what we attend to), markets (where value pools form), and meaning (what we consider human work). Treating AI as just another app underestimates its atmospheric role; it is more like electricity or language--pervasive, infrastructural, and transformative.",
+                                    "AI as environment means it sets conditions before you choose to engage. Interfaces, defaults, and recommendations now frame your perception and options."
+                                ],
+                                whyMatters: [
+                                    "Assuming AI is optional or marginal leads to strategic drift and ethical blind spots. AI changes comparative advantage: judgment, framing, and human connection rise in value while routine synthesis is automated.",
+                                    "For Homo Adapticus, AI is both leverage and terrain. Failing to integrate it means competing at a disadvantage; over-relying on it invites fragility and shallow thinking."
+                                ],
+                                keyConcepts: [
+                                    "AI as Cognitive Amplifier: It extends ideation, translation, and simulation capacities.",
+                                    "Human-in-the-Loop Necessity: Verification, ethics, and context remain human strengths.",
+                                    "Over-Reliance Risk: Delegating sense-making to AI can erode personal models.",
+                                    "Comparative Advantage Shift: Framing, taste, and relationship-building gain importance.",
+                                    "Infrastructure, Not Gadget: Like the internet, AI reconfigures workflows, not just tasks."
+                                ],
+                                examples: [
+                                    "Personal: A writer uses AI to draft but keeps voice and structure decisions human, resulting in higher throughput and originality.",
+                                    "Professional: A legal team uses AI to summarize cases but institutes human review and citation checks to avoid hallucinations.",
+                                    "Societal/Tech: A platform allows AI agents to transact; a mis-specified agent causes price swings before human oversight halts it."
+                                ],
+                                extended: [
+                                    "AI's strengths: pattern generation, summarization, translation, rapid scenario creation. Weaknesses: grounding in facts, causal reasoning, and value alignment.",
+                                    "Misconception: AI will replace all roles. Reality: it reassigns labor between humans and machines, privileging those who can orchestrate workflows, not just complete tasks.",
+                                    "Hidden mechanisms include automation cascades--once an AI handles one step, pressure grows to automate adjacent steps, shrinking human context windows. Another: AI shapes what we see; recommendation and summarization can narrow perspective unless we deliberately diversify inputs.",
+                                    "Homo Adapticus must define AI guardrails: when to use it, when to verify, when to abstain. The stance is neither hype nor fear; it is ecological awareness."
+                                ],
+                                interactions: {
+                                    world: "AI is a macro force; anticipate sector shifts and new power centers.",
+                                    mind: "Use AI as a thinking partner, but keep model-building and judgment active.",
+                                    skill: "Learn prompt design, critique, and integration; pair with domain expertise.",
+                                    social: "Communicate AI use transparently; set norms for review and responsibility.",
+                                    meaning: "Decide what human work means to you; anchor purpose beyond automatable tasks."
+                                },
+                                prompts: [
+                                    "Where can AI safely amplify you, and where must you stay manual?",
+                                    "How do you verify AI outputs today?",
+                                    "Which parts of your identity are tied to tasks AI can do?",
+                                    "How will you preserve or enhance your judgment while using AI?",
+                                    "What norms do you need with collaborators about AI use?"
+                                ],
+                                exercises: [
+                                    "AI Audit (30 min): Log all AI uses in a week: task, benefit, risk, verification method.",
+                                    "Prompt and Guardrail Pairing (20 min): For one workflow, write a prompt plus a verification checklist.",
+                                    "Human Value Add (15 min): Identify three places in your work where framing, taste, or empathy improve outcomes beyond what AI can do."
+                                ],
+                                advanced: [
+                                    "Workflow Redesign (45-60 min): Redesign a full process with AI steps and explicit human checkpoints; test on a small project."
+                                ],
+                                summary: [
+                                    "AI is environmental, not incidental. Use it as leverage while protecting judgment and ethics.",
+                                    "Homo Adapticus integrates AI deliberately, keeping humans in the loop and identity rooted in what cannot be automated."
+                                ]
+                            }
                         }
                     },
                     {
@@ -111,7 +293,60 @@ const COURSES: CourseMeta[] = [
                             ],
                             practice: [
                                 "Write a non-adaptation bill: time, money, and wellbeing lost to resisting change."
-                            ]
+                            ],
+                            full: {
+                                essence: [
+                                    "Non-adaptation is not stasis; it is decay. When the environment moves and you do not, you accumulate misalignment: wasted effort, brittle strategies, emotional strain. The bill arrives as missed opportunities, rework, reputational erosion, and diminished agency.",
+                                    "In a moving world, non-action is an active bet that the environment will wait for you. It rarely does."
+                                ],
+                                whyMatters: [
+                                    "In an accelerating world, inaction compounds faster. What was once 'wait and see' is now 'fall behind and pay twice.' Homo Adapticus treats adaptation as routine maintenance, not crisis response.",
+                                    "Recognizing the cost clarifies why investing in adaptation is not optional self-help--it is survival and advantage."
+                                ],
+                                keyConcepts: [
+                                    "Misalignment Tax: Time, money, and attention spent propping up obsolete models.",
+                                    "Emotional Drag: Anxiety, frustration, and learned helplessness from repeated surprises.",
+                                    "Opportunity Cost: Doors that close while you deliberate or deny reality.",
+                                    "Reputational Slip: Signals to peers and markets that you are behind, reducing trust.",
+                                    "Adaptation Debt: Like technical debt--delayed updates create larger future fixes."
+                                ],
+                                examples: [
+                                    "Personal: Ignoring new health data tools, someone sticks to an old routine; minor issues escalate into costly interventions.",
+                                    "Professional: A team refuses to adopt collaborative AI, ships slower, and loses a client to a faster competitor.",
+                                    "Societal/AI: An institution delays updating hiring practices; bias audits later become expensive, public crises."
+                                ],
+                                extended: [
+                                    "Non-adaptation stems from identity lock-in ('I am not the kind of person who...'), sunk cost fallacy, and fear of novice status. The environment changes your stakeholders' expectations; by the time you notice, their trust has shifted elsewhere.",
+                                    "Misconception: 'If it is not broken, do not fix it.' In a moving environment, 'not broken' can still be misaligned. Another: 'Adapting means chasing fads.' True adaptation is principled; it aligns with evidence and purpose, not trend chasing.",
+                                    "Adaptation debt compounds: the longer you delay, the more processes, tools, and relationships assume the old model. Paying the debt later requires larger, riskier shifts."
+                                ],
+                                interactions: {
+                                    world: "External shifts make your static models obsolete; cost shows up as competitive lag.",
+                                    mind: "Mental rigidity increases stress; adaptive cognition lowers anxiety.",
+                                    skill: "Skills atrophy; refusal to refresh erodes capability and credibility.",
+                                    social: "Networks update without you; you lose relevance in conversations and opportunities.",
+                                    meaning: "Clinging to outdated narratives fractures coherence; updating preserves integrity."
+                                },
+                                prompts: [
+                                    "Where have you paid a misalignment bill recently?",
+                                    "Which avoided change now feels larger and riskier?",
+                                    "How does your identity resist becoming a beginner again?",
+                                    "What opportunity did you miss because you waited?",
+                                    "Who in your circle adapts fast--what do they do differently?"
+                                ],
+                                exercises: [
+                                    "Misalignment Ledger (20 min): List recent surprises or rework; estimate time, money, and emotional cost.",
+                                    "Small Refit (20-30 min): Pick one workflow and update a tool or step; note friction and payoff.",
+                                    "Beginner Reps (15 min): Try a new feature or tool for 15 minutes daily for a week to normalize novice status."
+                                ],
+                                advanced: [
+                                    "Adaptation Debt Sprint (45-60 min): Identify your top three adaptation debts; design a 30-day plan with checkpoints to pay down one."
+                                ],
+                                summary: [
+                                    "Non-adaptation quietly accumulates debt and stress. Homo Adapticus pays small adaptation bills continuously to avoid catastrophic invoices.",
+                                    "Updating is not indulgence; it is stewardship of your time, reputation, and agency."
+                                ]
+                            }
                         }
                     }
                 ]
@@ -132,7 +367,62 @@ const COURSES: CourseMeta[] = [
                             ],
                             practice: [
                                 "Write an evolution statement describing how you want to change this year."
-                            ]
+                            ],
+                            full: {
+                                essence: [
+                                    "Homo Adapticus is an identity: a human who treats change as habitat, not hazard. It is not about a single skill but a stance--curiosity, elasticity, reflective reasoning, ambiguity tolerance, experimentation, feedback hunger, and identity fluidity.",
+                                    "Origins lie in evolutionary survival: species and cultures that updated fastest endured. We modernize that lineage for digital, AI-mediated contexts."
+                                ],
+                                whyMatters: [
+                                    "Without an adaptive identity, adaptation stays episodic--a reaction to crises. With it, reinvention becomes normal.",
+                                    "In the AI era, where cognition is partially externalized to machines, the human edge shifts to framing, ethics, and synthesis. Homo Adapticus is the throughline that makes later practices coherent."
+                                ],
+                                keyConcepts: [
+                                    "Identity as Process: Self is software, updated via experiences and reflection.",
+                                    "Traits Portfolio: Curiosity, elasticity, reflection, ambiguity tolerance, experimentation, feedback hunger, identity fluidity.",
+                                    "From Doing to Becoming: Not 'I do X' but 'I become someone who can do X and its successors.'",
+                                    "Evolutionary Echo: Adaptability is ancestral; we modernize it for digital, AI-mediated contexts.",
+                                    "Adaptive Rituals: Regular behaviors that encode the stance (reviews, experiments, updates)."
+                                ],
+                                examples: [
+                                    "Personal: A designer shifts from print to product to AI prototyping, seeing each move as identity evolution, not loss.",
+                                    "Professional: A manager reframes her role from 'knowing answers' to 'creating conditions for adaptive learning,' enabling her team to iterate faster.",
+                                    "Societal/AI: A community adopts AI translation to include immigrants, expanding its identity to be more porous and multilingual."
+                                ],
+                                extended: [
+                                    "Homo Adapticus rejects the fixed-self narrative. Instead, it views identity as a versioning system: you release updates based on feedback from the world and your values.",
+                                    "Misconception: fluid identity means rootlessness. Reality: adaptive identity anchors in values and purpose while allowing methods and roles to change.",
+                                    "Hidden mechanism: social mirrors. People reflect back who they think you are; adapting requires managing those mirrors and sometimes tolerating dissonance.",
+                                    "Beginner discomfort is part of the package. Adaptive identity normalizes early incompetence as the price of future capability.",
+                                    "As tools think with us, the premium is on directing, questioning, and contextualizing. Adaptive identity keeps you in the director's seat."
+                                ],
+                                interactions: {
+                                    world: "Identity shapes how you scan and interpret external change.",
+                                    mind: "Self-concept governs willingness to update models; fluid identity reduces ego threat.",
+                                    skill: "Seeing self as evolving lowers fear of relearning; accelerates skill stacking.",
+                                    social: "Transparent evolution invites aligned collaborators; sheds misaligned expectations.",
+                                    meaning: "Values and purpose anchor the evolving self, preventing drift into trend chasing."
+                                },
+                                prompts: [
+                                    "How have you described yourself in ways that block change?",
+                                    "Which trait of Homo Adapticus is weakest for you? Why?",
+                                    "When did you last allow yourself to be a beginner publicly?",
+                                    "What values will you keep constant while methods change?",
+                                    "How do others' expectations shape your identity story?"
+                                ],
+                                exercises: [
+                                    "Evolution Statement (20-30 min): Write a one-year identity update: who you are becoming, what you will learn, what you will drop.",
+                                    "Trait Ritual (15 min): Pick one weak trait; design a weekly ritual to exercise it (e.g., ambiguity tolerance via weekly exploratory reading without a goal).",
+                                    "Public Beginner Move (15-20 min): Share a learning-in-progress artifact with a peer group to normalize novice status."
+                                ],
+                                advanced: [
+                                    "Identity Versioning (45 min): Create v1.0, v1.5, v2.0 of your professional identity with triggers for upgrading (skills, contexts, values tests)."
+                                ],
+                                summary: [
+                                    "Homo Adapticus is a deliberate identity, not a sporadic action. By holding values steady and methods flexible, you turn adaptation into a life stance.",
+                                    "In a world reshaped by AI, this stance preserves agency, relevance, and coherence."
+                                ]
+                            }
                         }
                     },
                     {
@@ -148,7 +438,62 @@ const COURSES: CourseMeta[] = [
                             ],
                             practice: [
                                 "Design a 14-day micro-challenge to stress-test one weak trait."
-                            ]
+                            ],
+                            full: {
+                                essence: [
+                                    "Homo Adapticus is a portfolio of trainable traits. Curiosity keeps you scanning. Elasticity lets you bend without breaking. Reflective reasoning tempers speed with depth. Ambiguity tolerance keeps you acting when signals conflict. Experimentation turns ideas into evidence. Feedback hunger keeps your models honest. Identity fluidity allows you to change roles without fracturing.",
+                                    "These traits are muscles. Without deliberate reps, they atrophy; with use, they compound and reinforce one another."
+                                ],
+                                whyMatters: [
+                                    "Acceleration punishes single-point strengths. Curiosity without feedback hunger becomes trivia. Experimentation without reflection becomes noise. Identity fluidity without values becomes drift. The seven traits form a balanced system that converts volatility into learning.",
+                                    "In the AI era, you need to generate questions, test fast, accept correction, and reframe identity as contexts shift. The traits turn AI into leverage, not a crutch."
+                                ],
+                                keyConcepts: [
+                                    "Curiosity: Ongoing appetite for what you do not know; drives wider sensing.",
+                                    "Elasticity: Ability to stretch or swap models without losing coherence.",
+                                    "Reflective Reasoning: Metacognition that checks speed with rigor.",
+                                    "Ambiguity Tolerance: Capacity to act with incomplete or conflicting data.",
+                                    "Experimentation: Bias for running small tests over debating hypotheticals.",
+                                    "Feedback Hunger: Willingness to expose work to critique early and often.",
+                                    "Identity Fluidity: Viewing self as updatable, enabling role and method shifts."
+                                ],
+                                examples: [
+                                    "Personal: After moving to a new city, you deliberately try three communities (experiment) while noticing which identity stories you tell yourself (identity fluidity) instead of clinging to a single persona.",
+                                    "Professional: An engineer pilots two AI code tools (experiment), invites code review on both (feedback hunger), and switches mental models between performance and safety lenses (elasticity).",
+                                    "Societal/AI: A teacher adopts AI tutoring in class, stays curious about outcomes, tolerates ambiguity in early data, and reframes her role from content deliverer to learning orchestrator."
+                                ],
+                                extended: [
+                                    "Traits interact. Curiosity without feedback hunger becomes unfocused. Experimentation without reflection becomes churn. Identity fluidity without values becomes drift. The portfolio works as a system.",
+                                    "Misconception: traits are fixed. Reality: they are trainable states. You can ritualize curiosity (weekly deep dives), build ambiguity tolerance (make decisions with 70 percent info), or practice feedback hunger (ship rough drafts).",
+                                    "Hidden mechanism: social reinforcement. If your environment mocks experimentation, you will suppress it. Homo Adapticus curates contexts that reward the portfolio."
+                                ],
+                                interactions: {
+                                    world: "The portfolio tunes you to external signals and lets you move with them.",
+                                    mind: "Traits strengthen metacognition and emotional range under uncertainty.",
+                                    skill: "Practice loops improve when curiosity, feedback, and experiments are default.",
+                                    social: "Feedback hunger and identity fluidity improve collaboration and trust.",
+                                    meaning: "Values steer trait application so flexibility does not become drift."
+                                },
+                                prompts: [
+                                    "Which trait is weakest for you? What evidence shows that?",
+                                    "When did feedback change your mind last? How fast did you act?",
+                                    "Where do you shut down curiosity because it threatens identity?",
+                                    "How do you currently practice ambiguity tolerance?",
+                                    "Who in your network models experimentation well? What do they do?"
+                                ],
+                                exercises: [
+                                    "Trait Scorecard (15 min): Rate each trait 1-10 with examples; pick one to train.",
+                                    "Weekly Ritual (15 min): Define a ritual for the weakest trait (e.g., feedback hunger -> ship one rough draft weekly).",
+                                    "Ambiguity Reps (20 min): Make a decision with 70 percent info; note feelings and outcome."
+                                ],
+                                advanced: [
+                                    "Portfolio Sprint (45 min): For one week, design a daily micro-action for each trait and log effects."
+                                ],
+                                summary: [
+                                    "The seven traits are the living core of Homo Adapticus. They are trainable and mutually reinforcing.",
+                                    "Build rituals around your weakest traits to balance the portfolio and turn volatility into growth."
+                                ]
+                            }
                         }
                     },
                     {
@@ -164,7 +509,58 @@ const COURSES: CourseMeta[] = [
                             ],
                             practice: [
                                 "Rewrite your public bio to emphasize adaptive identity over fixed roles."
-                            ]
+                            ],
+                            full: {
+                                essence: [
+                                    "Adaptation is not just what you do; it is who you are becoming. Skills are snapshots; identity is the operating system that generates new skills. When adaptation is identity, reinvention is normal, not a crisis.",
+                                    "Homo Adapticus treats roles as temporary expressions of a deeper stance: I am someone who can become what the environment demands, guided by my values."
+                                ],
+                                whyMatters: [
+                                    "If you anchor identity to a static role, every change feels like loss. If you anchor to adaptive becoming, change feels like iteration. This reduces ego threat and speeds up learning.",
+                                    "AI accelerates role shifts. Those who cling to old labels burn energy defending status; those who identify as learners reallocate energy to growth."
+                                ],
+                                keyConcepts: [
+                                    "Identity Over Role: Roles are containers; identity is the adaptive engine.",
+                                    "Behavior Proof: Identity statements gain power when linked to observable behaviors.",
+                                    "Narrative Plasticity: You can rewrite your story to include change as a virtue.",
+                                    "Guardrails: Values and purpose keep adaptive identity from becoming opportunistic drift."
+                                ],
+                                examples: [
+                                    "Personal: You shift from 'I am a marketer' to 'I design experiments that connect ideas to people,' enabling moves across channels and tools.",
+                                    "Professional: A leader moves from 'I give answers' to 'I create conditions for adaptive learning,' changing meeting formats and expectations.",
+                                    "Societal/AI: A clinician reframes from 'diagnoser' to 'care orchestrator with AI support,' integrating tools without feeling replaced."
+                                ],
+                                extended: [
+                                    "Misconception: changing identity means betraying your past. Reality: you are integrating new capabilities with enduring values. Adaptive identity honors continuity of purpose, not rigidity of method.",
+                                    "Hidden mechanism: social labels can lag behind your evolution. You may need to narrate your shift to others to avoid being pulled back to old roles.",
+                                    "Behavior precedes belief. Small actions consistent with the new identity help your mind catch up: ship a public experiment, take a new kind of feedback, change your calendar to reflect the new stance."
+                                ],
+                                interactions: {
+                                    world: "Adaptive identity lets you reposition as markets and contexts shift.",
+                                    mind: "It lowers defensiveness and increases willingness to update beliefs.",
+                                    skill: "You learn faster when identity expects continual stacking of skills.",
+                                    social: "Clear narrative invites aligned collaborators and resets expectations.",
+                                    meaning: "Values and purpose anchor the evolving self, preventing aimless shape-shifting."
+                                },
+                                prompts: [
+                                    "Which labels do you cling to that no longer serve you?",
+                                    "What behaviors would prove your adaptive identity this week?",
+                                    "Who still mirrors an old version of you? How will you reset that?",
+                                    "What value anchors your adaptability so it does not become drift?"
+                                ],
+                                exercises: [
+                                    "Bio Rewrite (20 min): Rewrite your public bio to emphasize adaptive identity and current direction.",
+                                    "Behavior Pairing (15 min): Pick one identity statement and pair it with a weekly recurring action.",
+                                    "Narrative Share (15 min): Tell one stakeholder your new operating narrative and the behaviors that prove it."
+                                ],
+                                advanced: [
+                                    "Identity Pilot (45 min): Run a two-week pilot where your calendar, meetings, and outputs reflect the new identity; debrief what stuck."
+                                ],
+                                summary: [
+                                    "Adaptive identity turns reinvention into routine. Roles become expressions, not cages.",
+                                    "Prove the identity with behaviors and anchor it to values to avoid drift."
+                                ]
+                            }
                         }
                     },
                     {
@@ -180,7 +576,58 @@ const COURSES: CourseMeta[] = [
                             ],
                             practice: [
                                 "Draft a belief update list with actions for each belief."
-                            ]
+                            ],
+                            full: {
+                                essence: [
+                                    "Traditional worldviews prize stability: careers are ladders, expertise is permanent, institutions are slow, and truth is fixed. In an accelerating, AI-shaped world, these assumptions malfunction. They produce brittle plans and fragile identities.",
+                                    "Homo Adapticus replaces stability worship with fluid coherence: values and purpose anchor you while methods, tools, and roles remain negotiable."
+                                ],
+                                whyMatters: [
+                                    "Clinging to stability narratives invites repeated shocks: layoffs, disrupted industries, obsolete credentials. The pain is not just external; internal scripts about what 'should' be create suffering when reality diverges.",
+                                    "Updating worldviews frees energy. Instead of defending outdated models, you allocate attention to sensing, experimenting, and integrating. This is the engine of adaptive living."
+                                ],
+                                keyConcepts: [
+                                    "Stability Bias: Preference for fixed structures even when evidence shows volatility.",
+                                    "Legacy Scripts: Cultural stories about careers, expertise, and institutions that may no longer fit.",
+                                    "Fluid Coherence: Holding values steady while allowing forms to change.",
+                                    "Belief Updating: Treating beliefs as hypotheses, not dogma; revise or retire them based on evidence."
+                                ],
+                                examples: [
+                                    "Personal: Expecting a single employer to provide lifetime stability; resisting portfolio careers until a layoff forces abrupt change.",
+                                    "Professional: Designing five-year product roadmaps in a market where AI releases every quarter; plans crumble under faster cycles.",
+                                    "Societal/AI: Assuming college is the sole credential; AI-enabled skills marketplaces shift hiring toward portfolios and demos."
+                                ],
+                                extended: [
+                                    "Misconception: letting go of stability means chaos. Reality: you can keep values and direction while changing tactics and forms. Coherence need not equal rigidity.",
+                                    "Hidden mechanism: sunk identity cost. You invested in being 'the expert'; admitting decay feels like loss. Reframe: expertise evolves into meta-skill and mentorship when you keep updating.",
+                                    "Belief updating is a loop: observe evidence, interpret against current models, adjust beliefs, integrate in action. Avoid treating beliefs as heritage artifacts."
+                                ],
+                                interactions: {
+                                    world: "Updated beliefs align you with actual market and tech conditions.",
+                                    mind: "Reduces cognitive dissonance and anxiety when reality diverges from old scripts.",
+                                    skill: "Encourages continual learning and retiring obsolete methods.",
+                                    social: "Prevents misalignment with peers or teams that have already updated.",
+                                    meaning: "Values provide continuity so change does not erode purpose."
+                                },
+                                prompts: [
+                                    "Which beliefs about work or learning assume stability?",
+                                    "What evidence has already contradicted one of your core scripts?",
+                                    "What would you do differently if you assumed faster change by default?",
+                                    "How can you keep values constant while changing methods?"
+                                ],
+                                exercises: [
+                                    "Belief Audit (20 min): List five stability-based beliefs; mark retire, revise, or test.",
+                                    "Evidence Log (15 min): For one belief, collect three data points that support or challenge it.",
+                                    "Action Update (20 min): Change one routine to reflect an updated belief (e.g., monthly skill refresh)."
+                                ],
+                                advanced: [
+                                    "Script Rewrite (45 min): Rewrite a personal narrative (career, learning, identity) replacing stability assumptions with fluid coherence; share with a peer for critique."
+                                ],
+                                summary: [
+                                    "Stability-first worldviews misfire in volatile systems. Replace rigidity with fluid coherence anchored in values.",
+                                    "Treat beliefs as hypotheses; update them to stay aligned with reality."
+                                ]
+                            }
                         }
                     }
                 ]
@@ -201,7 +648,58 @@ const COURSES: CourseMeta[] = [
                             ],
                             practice: [
                                 "Run a 20-minute daily elasticity drill by reinterpreting one news item through science, economics, and psychology."
-                            ]
+                            ],
+                            full: {
+                                essence: [
+                                    "Cognitive elasticity is the ability to stretch, swap, and reshape mental models without losing coherence. It is intellectual agility under pressure: you can hold multiple frames, try them, and release them when they stop fitting.",
+                                    "Elasticity is not flimsiness. It pairs flexibility with rigor: you can move fast across models, but you test and integrate instead of drifting."
+                                ],
+                                whyMatters: [
+                                    "In complex, AI-mediated environments, single models fail quickly. Elastic thinkers adapt faster because they can reframe problems, integrate new data, and avoid being trapped by familiarity.",
+                                    "Without elasticity, you overfit to outdated frames. This breeds brittle strategies and slow responses to signals that contradict your dominant model."
+                                ],
+                                keyConcepts: [
+                                    "Model Swapping: Deliberately applying different lenses (e.g., economic, psychological, systems) to the same problem.",
+                                    "Frame Awareness: Noticing the current lens you are using and its blind spots.",
+                                    "Rigor with Flexibility: Testing new frames against evidence before integrating.",
+                                    "AI as Frame Generator: Using AI to propose alternative framings while you verify."
+                                ],
+                                examples: [
+                                    "Personal: Facing a family conflict, you try a relational frame (needs), a logistical frame (scheduling), and a historical frame (patterns) before choosing an action.",
+                                    "Professional: A product issue is seen through user experience, technical debt, and business risk frames; you pick interventions from all three.",
+                                    "AI Context: You ask an AI to offer three frames for a stubborn problem, then you verify and test the best one."
+                                ],
+                                extended: [
+                                    "Misconception: flexibility means lack of conviction. Reality: you can hold strong provisional beliefs and still switch when evidence demands.",
+                                    "Hidden mechanism: emotional attachment to models. Pride and familiarity make frame switching feel like loss. Naming the attachment helps you release it.",
+                                    "Elasticity improves synthesis: by comparing frames, you find overlaps and integrate a better composite model."
+                                ],
+                                interactions: {
+                                    world: "Lets you reinterpret external signals quickly and match changing contexts.",
+                                    mind: "Trains metacognition to notice and adjust frames under stress.",
+                                    skill: "Speeds skill acquisition by mapping new domains to known structures.",
+                                    social: "Reduces conflict by trying others' frames; improves collaboration.",
+                                    meaning: "Values guide which frames you keep so flexibility does not erode integrity."
+                                },
+                                prompts: [
+                                    "Which frame do you default to, and what does it hide?",
+                                    "When did switching frames change your decision recently?",
+                                    "How do you feel when a trusted model fails?",
+                                    "Which colleague uses a different frame you can borrow?"
+                                ],
+                                exercises: [
+                                    "Three-Frame Drill (15 min): Pick a current problem and write three distinct frames for it.",
+                                    "Daily Reinterpret (20 min): Take one news item and reinterpret it through science, economics, and psychology.",
+                                    "Attachment Check (10 min): Note a model you resist abandoning; list what it costs you."
+                                ],
+                                advanced: [
+                                    "AI Frame Jam (30 min): Ask AI for five frames on a problem; test two quickly and keep one."
+                                ],
+                                summary: [
+                                    "Cognitive elasticity pairs flexible framing with evidence-based integration.",
+                                    "Switching and testing models keeps you aligned with reality as it shifts."
+                                ]
+                            }
                         }
                     },
                     {
@@ -217,7 +715,58 @@ const COURSES: CourseMeta[] = [
                             ],
                             practice: [
                                 "For one decision, log what System 1 felt, System 2 reasoned, and System GPT suggested."
-                            ]
+                            ],
+                            full: {
+                                essence: [
+                                    "Classic dual-process theory separates fast intuition (System 1) from slow reasoning (System 2). In the AI era, a third player emerges: System GPT, an external cognitive partner that generates, critiques, and simulates. Effective thinkers orchestrate all three.",
+                                    "Each system has strengths and failure modes. Mastery is not choosing one, but assigning the right system to the right task with guardrails."
+                                ],
+                                whyMatters: [
+                                    "Over-trusting any single system backfires: intuition can be biased, analysis can be slow, AI can hallucinate. Coordinating them reduces errors and speeds learning.",
+                                    "Homo Adapticus leverages AI without losing judgment. Misplaced trust in System GPT leads to brittle decisions; ignoring it forfeits leverage."
+                                ],
+                                keyConcepts: [
+                                    "Task Matching: Intuition for patterns, analysis for structure, AI for generation and simulation.",
+                                    "Guardrails: Verification steps for AI outputs; checks for cognitive bias in intuition; deadlines for over-analysis.",
+                                    "Latency Management: Using AI to prototype ideas fast, then applying human scrutiny.",
+                                    "Role Separation: Define what each system may and may not do."
+                                ],
+                                examples: [
+                                    "Personal: You feel uneasy (System 1) about a rushed purchase, build a quick pros/cons table (System 2), and ask AI to simulate scenarios (System GPT) before deciding.",
+                                    "Professional: A team brainstorms options with AI, then uses structured decision matrices to rank them, while noting intuitive red flags about stakeholder reactions.",
+                                    "AI Context: You ask AI to critique your draft, but verify claims and keep final judgment human."
+                                ],
+                                extended: [
+                                    "Misconception: AI will replace intuition or analysis. Reality: AI extends both but requires coordination.",
+                                    "Hidden mechanism: automation bias. When AI outputs are fluent, people over-trust them. Counter with mandatory verification steps.",
+                                    "System 1 can spot anomalies quickly; System 2 can overfit to spreadsheets; System GPT can fabricate. Design your workflow to catch each other's blind spots."
+                                ],
+                                interactions: {
+                                    world: "Faster, AI-rich environments reward those who delegate wisely between systems.",
+                                    mind: "Metacognition improves when you label which system you are using and why.",
+                                    skill: "Skill drills can pair AI simulations with human feedback to accelerate learning.",
+                                    social: "Teams align better when they name which system is leading a decision phase.",
+                                    meaning: "Purpose and values decide when human judgment must override AI convenience."
+                                },
+                                prompts: [
+                                    "Where do you over-trust intuition? Where do you over-analyze?",
+                                    "How do you currently verify AI outputs?",
+                                    "Which tasks could be safely delegated to AI to save time?",
+                                    "When should human values override efficiency?"
+                                ],
+                                exercises: [
+                                    "Decision Log (20 min): For one decision, note System 1 feelings, System 2 reasoning, and System GPT suggestions; choose deliberately.",
+                                    "Guardrail Draft (15 min): Write verification steps for AI outputs in one workflow.",
+                                    "Bias Check (10 min): List two biases your intuition might have on a current topic; design a check."
+                                ],
+                                advanced: [
+                                    "Workflow Orchestration (45 min): Map a full workflow tagging which system leads each step and where verification occurs; test on a small project."
+                                ],
+                                summary: [
+                                    "System 1, System 2, and System GPT each add power and risk. Orchestrate them with guardrails and clear roles.",
+                                    "Use AI as a fast simulator, intuition as an anomaly detector, and analysis as the structurer--while letting values govern the whole."
+                                ]
+                            }
                         }
                     },
                     {
@@ -1015,7 +1564,7 @@ const COURSES: CourseMeta[] = [
         title: en("The Five Domains of Adaptation"),
         tagline: en("Understand the true structure of life, change, and human development."),
         description: en(
-            "Learn the five-domain model—World, Mind, Skill, Social, Meaning—and use it to diagnose challenges and design growth."
+            "Learn the five-domain model--World, Mind, Skill, Social, Meaning--and use it to diagnose challenges and design growth."
         ),
         modules: [
             {
@@ -1527,4 +2076,5 @@ export function getAllLessonSlugs() {
     }
     return slugs;
 }
+
 
